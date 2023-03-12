@@ -48,12 +48,12 @@ namespace projekt
                 }
                 else
                 {
-                    Result.Content = "Niewybrana operacja!!";
+                    Result.Content = "Błąd!! Niewybrana operacja.";
                 }
             }
             else
             {
-                Result.Content = "Niepoprawny format liczby!!";
+                Result.Content = "Błąd!! Niepoprawny format liczby.";
             }
         }
     }

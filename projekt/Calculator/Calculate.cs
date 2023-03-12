@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 
 namespace projekt
 {
@@ -19,15 +20,12 @@ namespace projekt
                     res = num1 * num2;
                     break;
                 case "/":
-                    try
+                    if (num2 == 0) 
                     {
-                        res = num1 / num2;
+                        MessageBox.Show("Błąd!! Dzielenie przez zero.");
+                        return -1; 
                     }
-                    catch (Exception e)
-                    {
-                        string xd = e.Message;
-                        res = -1;
-                    }
+                    else { res = num1 / num2; }
                     break;
                 default:
                     res = -1;

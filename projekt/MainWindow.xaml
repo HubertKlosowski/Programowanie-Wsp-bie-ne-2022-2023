@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projekt"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Calculator" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40px"/>
@@ -16,22 +16,22 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="200px"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextAlignment="Center" FontSize="25px" Background="Black" Foreground="White">Super Calculator</TextBlock>
-        <Label Grid.Row="1" Grid.Column="0" Content="Podaj pierwszą liczbę:" FontSize="15px"></Label>
+        <Label Grid.Row="1" Grid.Column="0" FontSize="15px" VerticalAlignment="Center" HorizontalAlignment="Left">Podaj pierwszą liczbę:</Label>
         <TextBox Grid.Row="1" Grid.Column="1" Name="Num1" FontSize="15px"></TextBox>
-        <Label Grid.Row="2" Grid.Column="0" Content="Podaj drugą liczbę:" FontSize="15px"></Label>
+        <Label Grid.Row="2" Grid.Column="0" FontSize="15px" VerticalAlignment="Center" HorizontalAlignment="Left">Podaj drugą liczbę:</Label>
         <TextBox Grid.Row="2" Grid.Column="1" Name="Num2" FontSize="15px"></TextBox>
-        <TextBlock Grid.Row="3" Grid.Column="0" Name="Operation" FontSize="15px" VerticalAlignment="Center">Wybierz działanie</TextBlock>
-        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-            <RadioButton x:Name="Add" Content="dodawanie (+)"/>
-            <RadioButton x:Name="Subtract" Content="odejmowanie (-)"/>
-            <RadioButton x:Name="Multiply" Content="mnożenie (*)"/>
-            <RadioButton x:Name="Divide" Content="dzielenie (/)"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Name="Operation" FontSize="15px" VerticalAlignment="Center" HorizontalAlignment="Left">Wybierz działanie:</TextBlock>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <RadioButton Name="Add" Content="dodawanie (+)" Margin="10, 10, 10, 5" FontSize="15px"/>
+            <RadioButton Name="Subtract" Content="odejmowanie (-)" Margin="5, 10, 10, 5" FontSize="15px"/>
+            <RadioButton Name="Multiply" Content="mnożenie (*)" Margin="5, 10, 10, 5" FontSize="15px"/>
+            <RadioButton Name="Divide" Content="dzielenie (/)" Margin="5, 10, 10, 10" FontSize="15px"/>
         </StackPanel>
-        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Wykonaj" FontSize="15px" Click="Button_Click"></Button>
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Wykonaj" FontSize="15px" Click="Button_Click" Width="300px" Margin="0, 10, 0, 10" FontWeight="Bold"></Button>
         <Label Grid.Row="5" Grid.Column="0" Content="Wynik:" FontSize="15px"></Label>
         <Label Grid.Row="5" Grid.Column="1" Name="Result" FontSize="15px" Background="WhiteSmoke" FontWeight="Bold"></Label>
     </Grid>
