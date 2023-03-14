@@ -20,11 +20,7 @@ namespace projekt
                     res = num1 * num2;
                     break;
                 case "/":
-                    if (num2 == 0) 
-                    {
-                        MessageBox.Show("Błąd!! Dzielenie przez zero.");
-                        return -1; 
-                    }
+                    if (num2 == 0) { return -1; }
                     else { res = num1 / num2; }
                     break;
                 default:
