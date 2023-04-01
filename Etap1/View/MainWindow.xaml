@@ -1,0 +1,25 @@
+﻿<Window x:Class="View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:View"
+        mc:Ignorable="d"
+        Title="Balls" Height="450" Width="700"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50px"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Width="200px" Text="Podaj liczbę kul: " FontSize="25px" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,10,50,0"></TextBlock>
+        <Button Grid.Row="0" Grid.Column="1" Width="100px" Content="Generuj" Margin="50,10,50,0"></Button>
+        <Button Grid.Row="0" Grid.Column="2" Width="100px" Content="Resetuj" Margin="50,10,50,0"></Button>
+        
+    </Grid>
+</Window>
