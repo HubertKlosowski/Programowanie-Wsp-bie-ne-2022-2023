@@ -9,12 +9,34 @@ public class Ball : INotifyPropertyChanged
     private int _r = 0;
     private bool _changeX = false;
     private bool _changeY = false;
+    private double _velX = 1;
+    private double _velY = 1;
 
     public Ball(int x, int y, int r)
     {
         _x = x;
         _y = y;
         _r = r;
+    }
+    
+    public double velX
+    {
+        get { return _velX; }
+        set
+        {
+            _velX = value;
+            OnPropertyChanged("velX");
+        }
+    }
+    
+    public double velY
+    {
+        get { return _velY; }
+        set
+        {
+            _velY = value;
+            OnPropertyChanged("velY");
+        }
     }
     
     public bool changeY

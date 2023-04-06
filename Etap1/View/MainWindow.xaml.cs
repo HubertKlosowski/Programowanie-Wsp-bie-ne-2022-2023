@@ -34,11 +34,6 @@ namespace View
                 numOfBalls = 3;
                 NumberOfBalls.Text = "3";
             }
-            if (numOfBalls >= 2789)
-            {
-                numOfBalls = 3;
-                NumberOfBalls.Text = "3";
-            }
             Random random = new Random();
             List<Brush> colors = new List<Brush>
             {
@@ -53,15 +48,20 @@ namespace View
             };
             int size = colors.Count;
             int r = random.Next(10, 21);
+            if (MyCanvas.ActualHeight * MyCanvas.ActualWidth < numOfBalls * r * r * 4) //ile maksymalnie moze byc na planszy
+            {
+                numOfBalls = 3;
+                NumberOfBalls.Text = "3";
+            }
             for (int i = 0; i < numOfBalls; i++)
             {
-                int x = random.Next(5, 684 - r);
-                int y = random.Next(5, 411 - r);
+                int x = random.Next(5, (int)MyCanvas.ActualWidth - r);
+                int y = random.Next(5, (int)MyCanvas.ActualHeight - r);
                 Ball ball = new Ball(x, y, r);
                 while (!checkInitialCoordinates(ball))
                 {
-                    ball.X = random.Next(5, 684 - r);
-                    ball.Y= random.Next(5, 411 - r);
+                    ball.X = random.Next(5, (int)MyCanvas.ActualWidth - r);
+                    ball.Y= random.Next(5, (int)MyCanvas.ActualHeight - r);
                     if (checkInitialCoordinates(ball))
                     {
                         break;
@@ -92,7 +92,9 @@ namespace View
             }
             for (int i = 0; i < _balls.Count; i++)
             {
-                if (Math.Pow(newball.X - _balls[i].X, 2) + Math.Pow(newball.Y - _balls[i].Y, 2) <= Math.Pow(newball.R + _balls[i].R, 2))
+                if (((newball.X - _balls[i].X) * (newball.X - _balls[i].X))
+                    + ((newball.Y - _balls[i].Y) * (newball.Y - _balls[i].Y))
+                    <= (newball.R + _balls[i].R) * (newball.R + _balls[i].R))
                 {
                     return false;
                 }
@@ -116,48 +118,57 @@ namespace View
 
         private void checkEdgeCollisions(Ball ball)
         {
-            if (ball.Y > 411 - ball.R || ball.changeY)
+            if (ball.Y > MyCanvas.ActualHeight - ball.R || ball.changeY)
             {
-                ball.Y -= 1;
+                ball.Y -= ball.velY;
                 ball.changeY = true;
             }
             if (ball.Y < ball.R)
             {
-                ball.Y += 1;
+                ball.Y += ball.velY;
                 ball.changeY = false;
             }
             if (!ball.changeY)
             {
-                ball.Y += 1;
+                ball.Y += ball.velY;
             }
             if (ball.changeY)
             {
-                ball.Y -= 1;
+                ball.Y -= ball.velY;
             }
-            if (ball.X > 684 - ball.R || ball.changeX)
+            if (ball.X > MyCanvas.ActualWidth - ball.R || ball.changeX)
             {
-                ball.X -= 1;
+                ball.X -= ball.velX;
                 ball.changeX = true;
             }
             if (ball.X < ball.R)
             {
-                ball.X += 1;
+                ball.X += ball.velX;
                 ball.changeX = false;
             }
             if (!ball.changeX)
             {
-                ball.X += 1;
+                ball.X += ball.velX;
             }
             if (ball.changeX)
             {
-                ball.X -= 1;
+                ball.X -= ball.velX;
             }
         }
         
-        private void checkBallCollisions(Ball ball1, Ball ball2) //prawie działa
+        private void checkBallCollisions(Ball ball1, Ball ball2)
         {
-            if (Math.Pow(ball1.X - ball2.X, 2) + Math.Pow(ball1.Y - ball2.Y, 2) <= Math.Pow(ball1.R + ball2.R, 2))
+            if (((ball1.X - ball2.X) * (ball1.X - ball2.X)) + ((ball1.Y - ball2.Y) * (ball1.Y - ball2.Y)) <= ((ball1.R + ball2.R) * (ball1.R + ball2.R)))
             {
+                double fi = Math.Atan(Math.Abs(ball1.Y - ball2.Y) / Math.Abs(ball1.X - ball2.X));
+                double v1 = Math.Sqrt((ball1.velY * ball1.velY) + (ball1.velX * ball1.velX));
+                double v2 = Math.Sqrt((ball2.velY * ball2.velY) + (ball2.velX * ball2.velX));
+                double alpha = Math.Acos(ball1.velY / v1);
+                double beta = Math.Acos(ball2.velY / v2);
+                ball1.velX = v2 * Math.Cos(beta - fi) * Math.Cos(fi) + (v1 * Math.Sin(alpha - fi) * Math.Cos(fi + Math.PI / 2));
+                ball1.velY = v2 * Math.Cos(beta - fi) * Math.Sin(fi) + (v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2));
+                ball2.velX = v1 * Math.Cos(alpha - fi) * Math.Cos(fi) + (v2 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2));
+                ball2.velY = v1 * Math.Cos(alpha - fi) * Math.Sin(fi) + (v2 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2));
                 ball1.changeX = !ball1.changeX;
                 ball1.changeY = !ball1.changeY;
                 ball2.changeX = !ball2.changeX;
@@ -170,12 +181,9 @@ namespace View
             for (int i = 0; i < _balls.Count; i++)
             {
                 checkEdgeCollisions(_balls[i]);
-                for (int j = 0; j < _balls.Count; j++)
+                for (int j = i + 1; j < _balls.Count; j++)
                 {
-                    if (j != i)
-                    {
-                        checkBallCollisions(_balls[i], _balls[j]);
-                    }
+                    checkBallCollisions(_balls[i], _balls[j]);
                 }
                 Canvas.SetLeft(MyCanvas.Children[i + 1], _balls[i].X - _balls[i].R);
                 Canvas.SetTop(MyCanvas.Children[i + 1], _balls[i].Y - _balls[i].R);
