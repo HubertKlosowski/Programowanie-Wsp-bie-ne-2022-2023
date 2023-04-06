@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="Balls" Height="450" Width="700"
+        Title="Balls" Height="500" Width="700"
         ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50px"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -17,9 +17,16 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Width="200px" Text="Podaj liczbę kul: " FontSize="25px" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,10,50,0"></TextBlock>
-        <Button Grid.Row="0" Grid.Column="1" Width="100px" Content="Generuj" Margin="50,10,50,0"></Button>
-        <Button Grid.Row="0" Grid.Column="2" Width="100px" Content="Resetuj" Margin="50,10,50,0"></Button>
-        
+        <TextBlock Width="150" Text="Podaj liczbę kul:" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,10,0,10"></TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" Width="100" Height="25" Name="NumberOfBalls" FontSize="20" Margin="0,10,0,10" Background="LightGray"></TextBox>
+        <Button Grid.Row="0" Grid.Column="2" Width="60" Content="Generate" Margin="50,10,0,10" Click="GenerateBalls" HorizontalAlignment="Left" Name="Button"></Button>
+        <Button Grid.Row="0" Grid.Column="2" Width="60" Content="Reset" Margin="0,10,50,10" Click="ResetBalls" HorizontalAlignment="Right"></Button>
+        <Button Grid.Row="0" Grid.Column="2" Width="50" Content="Start" Margin="0,10,75,10" Click="StartBalls" HorizontalAlignment="Center"></Button>
+        <Button Grid.Row="0" Grid.Column="2" Width="50" Content="Stop" Margin="75,10,0,10" Click="StopBalls" HorizontalAlignment="Center"></Button>
+        <Canvas Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Name="MyCanvas">
+            <Rectangle Width="684" Height="411" Fill="LightGray">
+                
+            </Rectangle>
+        </Canvas>
     </Grid>
 </Window>
