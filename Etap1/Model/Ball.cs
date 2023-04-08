@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Logic;
 
 namespace Model;
 
@@ -7,58 +8,14 @@ public class Ball : INotifyPropertyChanged
     private double _x = 0;
     private double _y = 0;
     private int _r = 0;
-    private bool _changeX = false;
-    private bool _changeY = false;
-    private double _velX = 1;
-    private double _velY = 1;
 
-    public Ball(int x, int y, int r)
+    public Ball(Circle circle)
     {
-        _x = x;
-        _y = y;
-        _r = r;
+        _x = circle.X;
+        _y = circle.Y;
+        _r = circle.R;
     }
-    
-    public double velX
-    {
-        get { return _velX; }
-        set
-        {
-            _velX = value;
-            OnPropertyChanged("velX");
-        }
-    }
-    
-    public double velY
-    {
-        get { return _velY; }
-        set
-        {
-            _velY = value;
-            OnPropertyChanged("velY");
-        }
-    }
-    
-    public bool changeY
-    {
-        get { return _changeY; }
-        set
-        {
-            _changeY = value;
-            OnPropertyChanged("changeY");
-        }
-    }
-    
-    public bool changeX
-    {
-        get { return _changeX; }
-        set
-        {
-            _changeX = value;
-            OnPropertyChanged("changeX");
-        }
-    }
-    
+
     public double X
     {
         get { return _x; }
