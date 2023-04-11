@@ -4,13 +4,12 @@ public class Canvas
 {
     private double _width;
     private double _height;
-    private List<Circle> _circles;
+    private List<Circle> _circles = new ();
 
     public Canvas(double width, double height)
     {
         _width = width;
         _height = height;
-        _circles = new List<Circle>();
     }
     
     public void AddCirclesToCanvas(int count)
@@ -38,8 +37,8 @@ public class Canvas
                 {
                     break;
                 }
-                _circles.Add(circle);
             }
+            _circles.Add(circle);
         }
     }
     

@@ -17,7 +17,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Width="150" Text="Podaj liczbę kul:" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,10,0,10"></TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" Width="100" Height="25" FontSize="20" Margin="0,10,0,10" Background="LightGray"></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1" Width="100" Height="25" FontSize="20" Margin="0,10,0,10" Background="LightGray" Text="{Binding CountBalls}"></TextBox>
         <Button Grid.Row="0" Grid.Column="2" Width="60" Content="Generate" Margin="50,10,0,10" HorizontalAlignment="Left" Command="{Binding GenerateBalls}"></Button>
         <Button Grid.Row="0" Grid.Column="2" Width="60" Content="Reset" Margin="0,10,50,10" HorizontalAlignment="Right"></Button>
         <Button Grid.Row="0" Grid.Column="2" Width="50" Content="Start" Margin="0,10,75,10" HorizontalAlignment="Center"></Button>

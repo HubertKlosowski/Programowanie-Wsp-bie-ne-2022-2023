@@ -6,11 +6,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{47646D53-2621-42C5-B12F-CF4EB3F90A22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{05C737BB-0286-406F-B13B-F3F1818C62F9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{EE969299-2439-43AF-A25D-95124E90D6AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{F4670B4D-E99C-4599-9C9F-FBAFD2427716}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{A4A1CB4D-E5F3-4646-96D0-0AF0ACE8A549}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +30,6 @@ Global
 		{47646D53-2621-42C5-B12F-CF4EB3F90A22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47646D53-2621-42C5-B12F-CF4EB3F90A22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47646D53-2621-42C5-B12F-CF4EB3F90A22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05C737BB-0286-406F-B13B-F3F1818C62F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05C737BB-0286-406F-B13B-F3F1818C62F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05C737BB-0286-406F-B13B-F3F1818C62F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05C737BB-0286-406F-B13B-F3F1818C62F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE969299-2439-43AF-A25D-95124E90D6AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE969299-2439-43AF-A25D-95124E90D6AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE969299-2439-43AF-A25D-95124E90D6AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,5 +38,9 @@ Global
 		{F4670B4D-E99C-4599-9C9F-FBAFD2427716}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4670B4D-E99C-4599-9C9F-FBAFD2427716}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4670B4D-E99C-4599-9C9F-FBAFD2427716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4A1CB4D-E5F3-4646-96D0-0AF0ACE8A549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4A1CB4D-E5F3-4646-96D0-0AF0ACE8A549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4A1CB4D-E5F3-4646-96D0-0AF0ACE8A549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4A1CB4D-E5F3-4646-96D0-0AF0ACE8A549}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

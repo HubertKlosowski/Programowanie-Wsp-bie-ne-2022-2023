@@ -17,4 +17,6 @@ public abstract class ModelApi
     public abstract void Reset();
 
     public abstract void GetCanvasWidthHeight();
+
+    public abstract List<Ball> GetBalls();
 }
