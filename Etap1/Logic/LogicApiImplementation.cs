@@ -10,6 +10,7 @@ public class LogicApiImplementation : LogicApi
     private Timer _timer = new Timer(Update!, null, 0, 10);
     private static bool _running = false;
     private static object _lock = new();
+    
     public LogicApiImplementation(DataApi dataApi)
     {
         _dataApi = dataApi;

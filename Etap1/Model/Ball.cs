@@ -8,12 +8,20 @@ public class Ball : INotifyPropertyChanged
     private double _x = 0;
     private double _y = 0;
     private int _r = 0;
+    private string _color = "blue";
 
-    public Ball(Circle circle)
+    public string Color
+    {
+        get => _color;
+        set => _color = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    public Ball(Circle circle, string color)
     {
         _x = circle.X;
         _y = circle.Y;
         _r = circle.R;
+        _color = color;
     }
 
     public double X

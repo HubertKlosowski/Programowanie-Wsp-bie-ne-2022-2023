@@ -6,6 +6,7 @@ public class ModelApiImplementation : ModelApi
 {
     private LogicApi _logicApi;
     private List<Ball> _balls = new();
+    
     public ModelApiImplementation(LogicApi logicApi)
     {
         _logicApi = logicApi;
