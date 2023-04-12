@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
-        Title="Balls" Height="500" Width="700"
-        ResizeMode="NoResize">
+        Title="Balls Generator" Height="600" Width="800">
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
@@ -17,15 +20,23 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Width="150" Text="Podaj liczbę kul:" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,10,0,10"></TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" Width="100" Height="25" FontSize="20" Margin="0,10,0,10" Background="LightGray" Text="{Binding CountBalls}"></TextBox>
-        <Button Grid.Row="0" Grid.Column="2" Width="60" Content="Generate" Margin="50,10,0,10" HorizontalAlignment="Left" Command="{Binding GenerateBalls}"></Button>
-        <Button Grid.Row="0" Grid.Column="2" Width="60" Content="Reset" Margin="0,10,50,10" HorizontalAlignment="Right"></Button>
-        <Button Grid.Row="0" Grid.Column="2" Width="50" Content="Start" Margin="0,10,75,10" HorizontalAlignment="Center"></Button>
-        <Button Grid.Row="0" Grid.Column="2" Width="50" Content="Stop" Margin="75,10,0,10" HorizontalAlignment="Center"></Button>
-        <Canvas Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-            <Rectangle Width="684" Height="411" Fill="LightGray">
-                
-            </Rectangle>
+        <TextBox Grid.Row="0" Grid.Column="1" Width="100" Height="25" FontSize="20" Margin="0,10,0,10" Background="LightGray" Text="{Binding NumOfBalls}"></TextBox>
+        <Button Grid.Row="0" Grid.Column="2" Width="60" Content="Generate" Margin="50,10,0,10" HorizontalAlignment="Left" Command="{Binding GenerateCommand}" IsEnabled="{Binding Enable}"></Button>
+        <Button Grid.Row="0" Grid.Column="2" Width="60" Content="Reset" Margin="0,10,50,10" HorizontalAlignment="Right" Command="{Binding ResetCommand}"></Button>
+        <Button Grid.Row="0" Grid.Column="2" Width="50" Content="Start" Margin="0,10,75,10" HorizontalAlignment="Center" Command="{Binding StartCommand}"></Button>
+        <Button Grid.Row="0" Grid.Column="2" Width="50" Content="Stop" Margin="75,10,0,10" HorizontalAlignment="Center" Command="{Binding StopCommand}"></Button>
+        <Canvas Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Background="LightGray" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
+            <ItemsControl ItemsSource="{Binding Balls}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Ellipse Width="{Binding R}" Height="{Binding R}" Fill="{Binding Color}">
+                            <Ellipse.RenderTransform>
+                                <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Canvas>
     </Grid>
 </Window>

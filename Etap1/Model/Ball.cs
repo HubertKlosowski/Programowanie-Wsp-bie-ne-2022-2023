@@ -5,10 +5,10 @@ namespace Model;
 
 public class Ball : INotifyPropertyChanged
 {
-    private double _x = 0;
-    private double _y = 0;
-    private int _r = 0;
-    private string _color = "blue";
+    private double _x;
+    private double _y;
+    private int _r;
+    private string _color;
 
     public string Color
     {

@@ -15,24 +15,24 @@ public class Canvas
     public void AddCirclesToCanvas(int count)
     {
         Random random = new Random();
-        if (count < 0)
+        if (count <= 0)
         {
-            throw new ArgumentException("Błąd!! Liczba kół nie może być ujemna.");
+            count = 3;
         }
         int r = random.Next(5, 11);
         if (count * r * r > _width * _height)
         {
-            throw new ArgumentException("Błąd!! Za dużo kół.");
+            count = (int)(_width * _height / (r * r));
         }
         for (int i = 0; i < count; i++)
         {
-            int x = random.Next(5, (int)_width - r);
-            int y = random.Next(5, (int)_height - r);
+            int x = random.Next(r, (int)_width - r);
+            int y = random.Next(r, (int)_height - r);
             Circle circle = new Circle(x, y, r);
-            while (!CheckInitialCoordinates(circle))
+            while (circle.X <= _width && circle.Y <= _height && !CheckInitialCoordinates(circle))
             {
-                circle.X = random.Next(5, (int)_width - r);
-                circle.Y = random.Next(5, (int)_width - r);
+                circle.X = random.Next(r, (int)_width - r);
+                circle.Y = random.Next(r, (int)_height - r);
                 if (CheckInitialCoordinates(circle))
                 {
                     break;
@@ -42,7 +42,7 @@ public class Canvas
         }
     }
     
-    private bool CheckInitialCoordinates(Circle newcircle)
+    public bool CheckInitialCoordinates(Circle newcircle)
     {
         if (_circles.Count == 0)
         {
@@ -90,7 +90,7 @@ public class Canvas
         }
     }
     
-    private void CheckBallCollisions(Circle circle1, Circle circle2)
+    public void CheckBallCollisions(Circle circle1, Circle circle2)
     {
         if (((circle1.X - circle2.X) * (circle1.X - circle2.X))
             + ((circle1.Y - circle2.Y) * (circle1.Y - circle2.Y))
@@ -112,7 +112,7 @@ public class Canvas
         }
     }
     
-    private void CheckEdgeCollisions(Circle circle)
+    public void CheckEdgeCollisions(Circle circle)
     {
         if (circle.Y > _height - circle.R || circle.changeY)
         {

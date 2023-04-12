@@ -1,52 +1,43 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Logic;
 
 namespace Model;
 
 public class ModelApiImplementation : ModelApi
 {
-    private LogicApi _logicApi;
-
-    private List<Ball> _balls = new();
-
-    private List<String> _colors = new() {"red", "blue", "green", "yellow", "pink", "black", "white", "orange", "purple", "brown"};
-
-    public override List<Ball> GetBalls()
-    {
-        return _balls;
-    }
+    private readonly LogicApi _logicApi;
+    private ObservableCollection<Ball> _balls = new();
+    private List<String> _colors = new() {"red", "blue", "green", "yellow", "black", "orange", "purple", "brown"};
 
     public ModelApiImplementation(LogicApi logicApi)
     {
         _logicApi = logicApi;
     }
-
-    public override void Start()
+    public override ObservableCollection<Ball> GetBalls()
     {
-        _logicApi.StartCircles();
+        return _balls;
     }
-
-    public override void Stop()
-    {
-        _logicApi.StopCircles();
-    }
-
     public override void Generate(int count)
     {
         _logicApi.AddCircles(count);
+        List<Circle> list = _logicApi.GetCircles();
         for (int i = 0; i < count; i++)
         {
-            _balls.Add(new Ball(_logicApi.GetCircles()[i], _colors[i % count]));
+            _balls.Add(new Ball(list[i], _colors[i % _colors.Count]));
         }
     }
-
     public override void Reset()
     {
         _balls.Clear();
+        _logicApi.GetCircles().Clear();
     }
-
-    public override void GetCanvasWidthHeight()
+    public override double GetCanvasWidth()
     {
-        _logicApi.GetCanvasDimensions();
+        return _logicApi.GetCanvasWidth();
+    }
+    public override double GetCanvasHeight()
+    {
+        return _logicApi.GetCanvasHeight();
     }
 }

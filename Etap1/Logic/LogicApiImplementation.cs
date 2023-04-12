@@ -1,61 +1,54 @@
 ﻿using Data;
-using System.Threading;
 
 namespace Logic;
 
 public class LogicApiImplementation : LogicApi
 {
-    private DataApi _dataApi;
-    private static Canvas _canvas = new Canvas(684, 411);
-    private Timer _timer = new Timer(Update!, null, 0, 10);
-    private static bool _running = false;
-    private static object _lock = new();
+    private readonly DataApi _dataApi;
+    public Canvas Canvas = new Canvas(700, 450);
     
     public LogicApiImplementation(DataApi dataApi)
     {
         _dataApi = dataApi;
     }
     
-    private static void Update(object state)
-    {
-        lock (_lock)
-        {
-            if (_running)
-            {
-                return;
-            }
-            _canvas.Update();
-        }
-    }
-    
     public override List<Circle> GetCircles()
     {
-        return _canvas.AllCircles;
+        return Canvas.AllCircles;
     }
 
-    public override double[] GetCanvasDimensions()
+    public override double GetCanvasWidth()
     {
-        return new double[] { _canvas.Width, _canvas.Height };
+        return Canvas.Width;
     }
 
-    public override void StartCircles()
+    public override double GetCanvasHeight()
     {
-        lock (_lock)
+        return Canvas.Height;
+    }
+
+    public override void AddCircles(int count)
+    {
+        try
         {
-            _running = true;
+            Canvas.AddCirclesToCanvas(count);
         }
-    }
-
-    public override void StopCircles()
-    {
-        lock (_lock)
+        catch (ArgumentException)
         {
-            _running = false;
+            
         }
     }
     
-    public override void AddCircles(int count)
+    public override void Update()
     {
-        _canvas.AddCirclesToCanvas(count);
+        Canvas.Update();
+    }
+    
+    public override void AddCircle(Circle circle)
+    {
+        if (Canvas.CheckInitialCoordinates(circle))
+            Canvas.AllCircles.Add(circle);
+        else
+            throw new ArgumentException("Błąd!! Niepoprawne współrzędne.");
     }
 }
