@@ -22,6 +22,7 @@ public class MainViewModel : INotifyPropertyChanged
     public ICommand ResetCommand { get; }
     public ICommand StartCommand { get; }
     public ICommand StopCommand { get; }
+    public Timer Timer { get; set; }
 
     public MainViewModel()
     {
@@ -33,6 +34,7 @@ public class MainViewModel : INotifyPropertyChanged
         StartCommand = new RelayCommand(o => Start(), o => true);
         StopCommand = new RelayCommand(o => Stop(), o => true);
         Balls = ModelApi.GetBalls();
+        Timer = new Timer(o => ModelApi.Update(), null, 0, 10);
     }
 
     public double CanvasWidth
@@ -74,12 +76,12 @@ public class MainViewModel : INotifyPropertyChanged
     
     private void Start()
     {
-        
+        Timer.Change(0, 10);
     }
     
     private void Stop()
     {
-        
+        Timer.Change(Timeout.Infinite, Timeout.Infinite);
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;

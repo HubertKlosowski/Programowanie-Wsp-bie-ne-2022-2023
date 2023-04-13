@@ -43,5 +43,12 @@ public class ModelApiImplementation : ModelApi
 
     public override void Update()
     {
+        _logicApi.Update();
+        List<Circle> list = _logicApi.GetCircles();
+        for (int i = 0; i < list.Count; i++)
+        {
+            _balls[i].X = list[i].X;
+            _balls[i].Y = list[i].Y;
+        }
     }
 }

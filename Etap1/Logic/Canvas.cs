@@ -105,6 +105,10 @@ public class Canvas
             circle1.velY = v2 * Math.Cos(beta - fi) * Math.Sin(fi) + (v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2));
             circle2.velX = v1 * Math.Cos(alpha - fi) * Math.Cos(fi) + (v2 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2));
             circle2.velY = v1 * Math.Cos(alpha - fi) * Math.Sin(fi) + (v2 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2));
+            circle2.X += circle2.velX;
+            circle2.Y += circle2.velY;
+            circle1.X += circle1.velX;
+            circle1.Y += circle1.velY;
             circle1.changeX = !circle1.changeX;
             circle1.changeY = !circle1.changeY;
             circle2.changeX = !circle2.changeX;
