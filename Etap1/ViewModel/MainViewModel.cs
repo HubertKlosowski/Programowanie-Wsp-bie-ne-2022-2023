@@ -34,7 +34,7 @@ public class MainViewModel : INotifyPropertyChanged
         StopCommand = new RelayCommand(o => Stop(), o => true);
         Balls = ModelApi.GetBalls();
     }
-    
+
     public double CanvasWidth
     {
         get => _canvasWidth;

@@ -40,4 +40,8 @@ public class ModelApiImplementation : ModelApi
     {
         return _logicApi.GetCanvasHeight();
     }
+
+    public override void Update()
+    {
+    }
 }

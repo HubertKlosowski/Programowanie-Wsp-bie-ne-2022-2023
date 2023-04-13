@@ -29,7 +29,7 @@ public class Canvas
             int x = random.Next(r, (int)_width - r);
             int y = random.Next(r, (int)_height - r);
             Circle circle = new Circle(x, y, r);
-            while (circle.X <= _width && circle.Y <= _height && !CheckInitialCoordinates(circle))
+            while (!CheckInitialCoordinates(circle))
             {
                 circle.X = random.Next(r, (int)_width - r);
                 circle.Y = random.Next(r, (int)_height - r);

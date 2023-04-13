@@ -54,6 +54,12 @@ public class Ball : INotifyPropertyChanged
         }
     }
 
+    public void UpdatePos(double x, double y)
+    {
+        X = x;
+        Y = y;
+    }
+
     private void OnPropertyChanged(string direction)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(direction));

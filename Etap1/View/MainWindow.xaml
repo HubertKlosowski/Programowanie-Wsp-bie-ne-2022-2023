@@ -6,10 +6,10 @@
         xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="Balls Generator" Height="600" Width="800">
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
     <Grid>
+        <Grid.DataContext>
+            <viewModel:MainViewModel/>
+        </Grid.DataContext>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -25,18 +25,21 @@
         <Button Grid.Row="0" Grid.Column="2" Width="60" Content="Reset" Margin="0,10,50,10" HorizontalAlignment="Right" Command="{Binding ResetCommand}"></Button>
         <Button Grid.Row="0" Grid.Column="2" Width="50" Content="Start" Margin="0,10,75,10" HorizontalAlignment="Center" Command="{Binding StartCommand}"></Button>
         <Button Grid.Row="0" Grid.Column="2" Width="50" Content="Stop" Margin="75,10,0,10" HorizontalAlignment="Center" Command="{Binding StopCommand}"></Button>
-        <Canvas Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Background="LightGray" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
-            <ItemsControl ItemsSource="{Binding Balls}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Ellipse Width="{Binding R}" Height="{Binding R}" Fill="{Binding Color}">
-                            <Ellipse.RenderTransform>
-                                <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
-                            </Ellipse.RenderTransform>
-                        </Ellipse>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Canvas>
+        <ItemsControl Background="LightGray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding Balls}" MaxWidth="{Binding CanvasWidth}" MaxHeight="{Binding CanvasHeight}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"></Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Ellipse Width="{Binding R}" Height="{Binding R}" Fill="{Binding Color}">
+                        <Ellipse.RenderTransform>
+                            <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>
