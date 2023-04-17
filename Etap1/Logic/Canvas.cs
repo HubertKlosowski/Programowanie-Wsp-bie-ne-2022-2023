@@ -90,7 +90,7 @@ public class Canvas
         }
     }
     
-    public void CheckBallCollisions(Circle circle1, Circle circle2)
+    private void CheckBallCollisions(Circle circle1, Circle circle2)
     {
         if (((circle1.X - circle2.X) * (circle1.X - circle2.X))
             + ((circle1.Y - circle2.Y) * (circle1.Y - circle2.Y))
@@ -116,7 +116,7 @@ public class Canvas
         }
     }
     
-    public void CheckEdgeCollisions(Circle circle)
+    private void CheckEdgeCollisions(Circle circle)
     {
         if (circle.Y > _height - circle.R || circle.changeY)
         {

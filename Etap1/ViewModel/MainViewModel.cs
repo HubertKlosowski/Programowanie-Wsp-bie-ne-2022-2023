@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Data;
 using Logic;
 using Model;
 
@@ -11,7 +10,7 @@ namespace ViewModel;
 
 public class MainViewModel : INotifyPropertyChanged
 {
-    private ModelApi ModelApi;
+    private ModelApi _modelApi;
     public ObservableCollection<Ball> Balls { get; set; }
     private string _numOfBalls;
     private double _canvasWidth;
@@ -26,15 +25,15 @@ public class MainViewModel : INotifyPropertyChanged
 
     public MainViewModel()
     {
-        ModelApi = ModelApi.Create(LogicApi.Create());
-        CanvasWidth = ModelApi.GetCanvasWidth();
-        CanvasHeight = ModelApi.GetCanvasHeight();
+        _modelApi = ModelApi.Create(LogicApi.Create());
+        CanvasWidth = _modelApi.GetCanvasWidth();
+        CanvasHeight = _modelApi.GetCanvasHeight();
         GenerateCommand = new RelayCommand(o => GenerateBalls(), o => true);
         ResetCommand = new RelayCommand(o => ResetBalls(), o => true);
         StartCommand = new RelayCommand(o => Start(), o => true);
         StopCommand = new RelayCommand(o => Stop(), o => true);
-        Balls = ModelApi.GetBalls();
-        Timer = new Timer(o => ModelApi.Update(), null, 0, 10);
+        Balls = _modelApi.GetBalls();
+        Timer = new Timer(o => _modelApi.Update(), null, 0, 1);
     }
 
     public double CanvasWidth
@@ -63,20 +62,21 @@ public class MainViewModel : INotifyPropertyChanged
 
     private void GenerateBalls()
     {
-        ModelApi.Generate(Int32.Parse(NumOfBalls));
+        _modelApi.Generate(Int32.Parse(NumOfBalls));
         Enable = false;
     }
     
     private void ResetBalls()
     {
-        ModelApi.Reset();
+        _modelApi.Reset();
         Enable = true;
         NumOfBalls = "";
+        Timer.Change(0, 1);
     }
     
     private void Start()
     {
-        Timer.Change(0, 10);
+        Timer.Change(0, 1);
     }
     
     private void Stop()

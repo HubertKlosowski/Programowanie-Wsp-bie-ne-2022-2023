@@ -35,7 +35,7 @@ public class LogicApiImplementation : LogicApi
         }
         catch (ArgumentException)
         {
-            
+            Canvas.AddCirclesToCanvas(3);
         }
     }
     

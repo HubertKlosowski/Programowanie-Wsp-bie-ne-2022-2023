@@ -25,10 +25,12 @@ public class ModelTest
     }
 
     [Fact]
-    public void TestBallGeneration()
+    public void TestBallGenerationAndReset()
     {
         ModelApi modelApi = ModelApi.Create(LogicApi.Create());
         modelApi.Generate(4);
         Assert.Equal(4, modelApi.GetBalls().Count);
+        modelApi.Reset();
+        Assert.Empty(modelApi.GetBalls());
     }
 }
