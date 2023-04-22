@@ -31,6 +31,7 @@ public class ModelApiImplementation : ModelApi
     {
         _balls.Clear();
         _logicApi.GetCircles().Clear();
+        _logicApi.Reset();
     }
     public override double GetCanvasWidth()
     {
@@ -50,5 +51,15 @@ public class ModelApiImplementation : ModelApi
             _balls[i].X = list[i].X;
             _balls[i].Y = list[i].Y;
         }
+    }
+    
+    public override void Stop()
+    {
+        _logicApi.Stop();
+    }
+    
+    public override void Start()
+    {
+        _logicApi.Start();
     }
 }

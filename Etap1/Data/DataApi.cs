@@ -2,6 +2,7 @@
 
 public abstract class DataApi
 {
+    public static Canvas Canvas = new (700, 450);
     public static DataApi Create()
     {
         return new DataApiImplementation();
@@ -11,5 +12,4 @@ public abstract class DataApi
     public abstract double GetCanvasHeight();
     public abstract void AddCircles(int count);
     public abstract void AddCircle(Circle circle);
-    public abstract void Update();
 }

@@ -88,18 +88,6 @@ public class Canvas
         get => _circles;
         set => _circles = value ?? throw new ArgumentNullException(nameof(value));
     }
-
-    public void Update()
-    {
-        for (int i = 0; i < _circles.Count; i++)
-        {
-            CheckEdgeCollisions(_circles[i]);
-            /*for (int j = i + 1; j < _circles.Count; j++)
-            {
-                CheckBallCollisions(_circles[i], _circles[j]);
-            }*/
-        }
-    }
     
     private void CheckBallCollisions(Circle c1, Circle c2)
     {
@@ -129,6 +117,11 @@ public class Canvas
             c2.ChangeX = !c2.ChangeX;
             c2.ChangeY = !c2.ChangeY;
         }
+    }
+
+    public void Move(Circle c)
+    {
+        CheckEdgeCollisions(c);
     }
     
     private void CheckEdgeCollisions(Circle circle)

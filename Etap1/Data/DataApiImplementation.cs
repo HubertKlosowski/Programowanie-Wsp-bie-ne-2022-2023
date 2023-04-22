@@ -2,8 +2,6 @@
 
 public class DataApiImplementation : DataApi
 {
-    public Canvas Canvas = new Canvas(700, 450);
-    
     public override List<Circle> GetCircles()
     {
         return Canvas.AllCircles;
@@ -39,8 +37,5 @@ public class DataApiImplementation : DataApi
             throw new ArgumentException("Błąd!! Niepoprawne współrzędne.");
     }
     
-    public override void Update()
-    {
-        Canvas.Update();
-    }
+    
 }

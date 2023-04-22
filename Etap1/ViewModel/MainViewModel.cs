@@ -22,7 +22,6 @@ public class MainViewModel : INotifyPropertyChanged
     public ICommand ResetCommand { get; }
     public ICommand StartCommand { get; }
     public ICommand StopCommand { get; }
-    public Timer Timer { get; }
 
     public MainViewModel()
     {
@@ -34,7 +33,6 @@ public class MainViewModel : INotifyPropertyChanged
         StartCommand = new RelayCommand(o => Start(), o => true);
         StopCommand = new RelayCommand(o => Stop(), o => true);
         Balls = _modelApi.GetBalls();
-        Timer = new Timer(o => _modelApi.Update(), null, 0, 1);
     }
 
     public double CanvasWidth
@@ -63,26 +61,39 @@ public class MainViewModel : INotifyPropertyChanged
 
     private void GenerateBalls()
     {
-        _modelApi.Generate(Int32.Parse(NumOfBalls));
+        try
+        {
+            _modelApi.Generate(Int32.Parse(NumOfBalls));
+        }
+        catch (Exception e)
+        {
+            _modelApi.Generate(3);
+        }
+        LogicApi.ShouldRun = true;
+        _modelApi.Update();
         Enable = false;
     }
     
     private void ResetBalls()
     {
         _modelApi.Reset();
+        LogicApi.ShouldRun = false;
         Enable = true;
         NumOfBalls = "";
-        Timer.Change(0, 1);
     }
     
     private void Start()
     {
-        Timer.Change(0, 1);
+        LogicApi.ShouldRun = true;
+        _modelApi.Start();
+        _modelApi.Update();
     }
     
     private void Stop()
     {
-        Timer.Change(Timeout.Infinite, Timeout.Infinite);
+        LogicApi.ShouldRun = false;
+        _modelApi.Stop();
+        _modelApi.Update();
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;

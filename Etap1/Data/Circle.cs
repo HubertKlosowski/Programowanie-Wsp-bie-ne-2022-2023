@@ -1,4 +1,7 @@
-﻿namespace Data;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace Data;
 
 public class Circle
 {

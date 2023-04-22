@@ -15,4 +15,6 @@ public abstract class ModelApi
     public abstract double GetCanvasHeight();
     public abstract ObservableCollection<Ball> GetBalls();
     public abstract void Update();
+    public abstract void Stop();
+    public abstract void Start();
 }
