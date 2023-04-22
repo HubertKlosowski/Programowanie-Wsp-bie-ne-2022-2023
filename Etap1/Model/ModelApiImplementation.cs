@@ -1,12 +1,12 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
 using Logic;
+using Data;
 
 namespace Model;
 
 public class ModelApiImplementation : ModelApi
 {
-    private readonly LogicApi _logicApi;
+    private LogicApi _logicApi;
     private ObservableCollection<Ball> _balls = new();
     private List<String> _colors = new() {"red", "blue", "green", "yellow", "black", "orange", "purple", "brown"};
 

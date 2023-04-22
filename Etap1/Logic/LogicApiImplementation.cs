@@ -4,8 +4,7 @@ namespace Logic;
 
 public class LogicApiImplementation : LogicApi
 {
-    private readonly DataApi _dataApi;
-    public Canvas Canvas = new Canvas(700, 450);
+    private DataApi _dataApi;
     
     public LogicApiImplementation(DataApi dataApi)
     {
@@ -14,41 +13,38 @@ public class LogicApiImplementation : LogicApi
     
     public override List<Circle> GetCircles()
     {
-        return Canvas.AllCircles;
+        return _dataApi.GetCircles();
     }
 
     public override double GetCanvasWidth()
     {
-        return Canvas.Width;
+        return _dataApi.GetCanvasWidth();
     }
 
     public override double GetCanvasHeight()
     {
-        return Canvas.Height;
+        return _dataApi.GetCanvasHeight();
     }
 
     public override void AddCircles(int count)
     {
         try
         {
-            Canvas.AddCirclesToCanvas(count);
+            _dataApi.AddCircles(count);
         }
         catch (ArgumentException)
         {
-            Canvas.AddCirclesToCanvas(3);
+            _dataApi.AddCircles(3);
         }
     }
     
     public override void Update()
     {
-        Canvas.Update();
+        _dataApi.Update();
     }
     
     public override void AddCircle(Circle circle)
     {
-        if (Canvas.CheckInitialCoordinates(circle))
-            Canvas.AllCircles.Add(circle);
-        else
-            throw new ArgumentException("Błąd!! Niepoprawne współrzędne.");
+        _dataApi.AddCircle(circle);
     }
 }

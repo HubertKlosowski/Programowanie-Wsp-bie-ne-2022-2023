@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using Logic;
+using Data;
 
 namespace Model;
 

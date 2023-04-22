@@ -2,8 +2,45 @@
 
 public class DataApiImplementation : DataApi
 {
-    public override void Hello()
+    public Canvas Canvas = new Canvas(700, 450);
+    
+    public override List<Circle> GetCircles()
     {
-        Console.WriteLine("Tu narazie jest ściernisko, ale będzie DATA LAYER!!!");
+        return Canvas.AllCircles;
+    }
+
+    public override double GetCanvasWidth()
+    {
+        return Canvas.Width;
+    }
+
+    public override double GetCanvasHeight()
+    {
+        return Canvas.Height;
+    }
+
+    public override void AddCircles(int count)
+    {
+        try
+        {
+            Canvas.AddCirclesToCanvas(count);
+        }
+        catch (ArgumentException)
+        {
+            Canvas.AddCirclesToCanvas(3);
+        }
+    }
+
+    public override void AddCircle(Circle circle)
+    {
+        if (Canvas.CheckInitialCoordinates(circle))
+            Canvas.AllCircles.Add(circle);
+        else
+            throw new ArgumentException("Błąd!! Niepoprawne współrzędne.");
+    }
+    
+    public override void Update()
+    {
+        Canvas.Update();
     }
 }

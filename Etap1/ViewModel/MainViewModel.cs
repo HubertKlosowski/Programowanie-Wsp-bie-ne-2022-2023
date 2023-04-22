@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Data;
 using Logic;
 using Model;
 
@@ -11,7 +12,7 @@ namespace ViewModel;
 public class MainViewModel : INotifyPropertyChanged
 {
     private ModelApi _modelApi;
-    public ObservableCollection<Ball> Balls { get; set; }
+    public ObservableCollection<Ball> Balls { get; }
     private string _numOfBalls;
     private double _canvasWidth;
     private double _canvasHeight;
@@ -21,11 +22,11 @@ public class MainViewModel : INotifyPropertyChanged
     public ICommand ResetCommand { get; }
     public ICommand StartCommand { get; }
     public ICommand StopCommand { get; }
-    public Timer Timer { get; set; }
+    public Timer Timer { get; }
 
     public MainViewModel()
     {
-        _modelApi = ModelApi.Create(LogicApi.Create());
+        _modelApi = ModelApi.Create(LogicApi.Create(DataApi.Create()));
         CanvasWidth = _modelApi.GetCanvasWidth();
         CanvasHeight = _modelApi.GetCanvasHeight();
         GenerateCommand = new RelayCommand(o => GenerateBalls(), o => true);
