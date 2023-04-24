@@ -7,16 +7,22 @@ namespace Model;
 public class ModelApiImplementation : ModelApi
 {
     private LogicApi _logicApi;
-    private ObservableCollection<Ball> _balls = new();
-    private List<String> _colors = new() {"red", "blue", "green", "yellow", "black", "orange", "purple", "brown"};
+    private ObservableCollection<Circle> _movingCircles = new();
+    public List<string?> Colors = new() {"red", "blue", "green", "yellow", "black", "orange", "purple", "brown"};
 
     public ModelApiImplementation(LogicApi logicApi)
     {
         _logicApi = logicApi;
     }
-    public override ObservableCollection<Ball> GetBalls()
+
+    public override void Update(object? state)
     {
-        return _balls;
+        _logicApi.Update();
+    }
+
+    public override ObservableCollection<Circle> GetBalls()
+    {
+        return _movingCircles;
     }
     public override void Generate(int count)
     {
@@ -24,12 +30,13 @@ public class ModelApiImplementation : ModelApi
         List<Circle> list = _logicApi.GetCircles();
         for (int i = 0; i < count; i++)
         {
-            _balls.Add(new Ball(list[i], _colors[i % _colors.Count]));
+            list[i].Color = Colors[i % Colors.Count];
+            _movingCircles.Add(list[i]);
         }
     }
     public override void Reset()
     {
-        _balls.Clear();
+        _movingCircles.Clear();
         _logicApi.GetCircles().Clear();
         _logicApi.Reset();
     }
@@ -40,17 +47,6 @@ public class ModelApiImplementation : ModelApi
     public override double GetCanvasHeight()
     {
         return _logicApi.GetCanvasHeight();
-    }
-
-    public override void Update()
-    {
-        _logicApi.Update();
-        List<Circle> list = _logicApi.GetCircles();
-        for (int i = 0; i < list.Count; i++)
-        {
-            _balls[i].X = list[i].X;
-            _balls[i].Y = list[i].Y;
-        }
     }
     
     public override void Stop()

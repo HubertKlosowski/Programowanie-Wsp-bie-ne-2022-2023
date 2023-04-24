@@ -122,6 +122,13 @@ public class Canvas
     public void Move(Circle c)
     {
         CheckEdgeCollisions(c);
+        /*for (int i = 0; i < _circles.Count; i++)
+        {
+            if (c != _circles[i])
+            {
+                CheckBallCollisions(c, _circles[i]);
+            }
+        }*/
     }
     
     private void CheckEdgeCollisions(Circle circle)

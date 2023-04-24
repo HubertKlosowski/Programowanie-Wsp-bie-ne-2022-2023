@@ -8,7 +8,7 @@ public abstract class LogicApi
     public static List<Thread> Threads = new();
     public static ManualResetEvent ManualResetEvent = new(true);
     
-    public static LogicApi Create(DataApi dataApi = default(DataApi)!)
+    public static LogicApi Create(DataApi dataApi = default!)
     {
         return new LogicApiImplementation(dataApi);
     }

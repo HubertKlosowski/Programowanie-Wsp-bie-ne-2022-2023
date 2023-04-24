@@ -9,18 +9,17 @@ public class ModelTest
     [Fact]
     public void TestCreateBall()
     {
-        Ball ball1 = new Ball(new Circle(5, 10, 4, 6), "red");
+        Circle ball1 = new Circle(5, 10, 4, 5);
         Assert.Equal(5, ball1.X);
         Assert.Equal(10, ball1.Y);
         Assert.Equal(4, ball1.R);
-        Assert.Equal("red", ball1.Color);
     }
 
     [Fact]
     public void TestCreateTwoBalls()
     {
-        Ball ball1 = new Ball(new Circle(5, 10, 4, 5), "red");
-        Ball ball2 = new Ball(new Circle(15, 10, 4, 5), "blue");
+        Circle ball1 = new Circle(5, 10, 4, 5);
+        Circle ball2 = new Circle(5, 10, 4, 5);
         Assert.NotEqual(ball1, ball2);
     }
 

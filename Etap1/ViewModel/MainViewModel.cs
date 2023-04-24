@@ -12,8 +12,8 @@ namespace ViewModel;
 public class MainViewModel : INotifyPropertyChanged
 {
     private ModelApi _modelApi;
-    public ObservableCollection<Ball> Balls { get; }
-    private string _numOfBalls;
+    public ObservableCollection<Circle> Balls { get; }
+    private string? _numOfBalls;
     private double _canvasWidth;
     private double _canvasHeight;
     private bool _enable = true;
@@ -53,7 +53,7 @@ public class MainViewModel : INotifyPropertyChanged
         set => SetField(ref _enable, value);
     }
     
-    public string NumOfBalls
+    public string? NumOfBalls
     {
         get => _numOfBalls;
         set => SetField(ref _numOfBalls, value);
@@ -70,7 +70,7 @@ public class MainViewModel : INotifyPropertyChanged
             _modelApi.Generate(3);
         }
         LogicApi.ShouldRun = true;
-        _modelApi.Update();
+        _modelApi.Update(null);
         Enable = false;
     }
     
@@ -86,14 +86,14 @@ public class MainViewModel : INotifyPropertyChanged
     {
         LogicApi.ShouldRun = true;
         _modelApi.Start();
-        _modelApi.Update();
+        _modelApi.Update(null);
     }
     
     private void Stop()
     {
         LogicApi.ShouldRun = false;
         _modelApi.Stop();
-        _modelApi.Update();
+        _modelApi.Update(null);
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;
