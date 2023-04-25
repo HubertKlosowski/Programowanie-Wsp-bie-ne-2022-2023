@@ -53,7 +53,7 @@ public class LogicApiImplementation : LogicApi
                         {
                             DataApi.Canvas.Move(circle);
                         }
-                        Thread.Sleep(10);
+                        Thread.Sleep(1);
                     }
                     catch (ThreadInterruptedException)
                     {

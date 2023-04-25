@@ -21,8 +21,8 @@ public class Canvas
         }
         for (int i = 0; i < count; i++)
         {
-            int mass = random.Next(25, 50);
-            int r = mass / 5;
+            int mass = random.Next(1, 5);
+            int r = mass * 10;
             int x = random.Next(r, (int)_width - r);
             int y = random.Next(r, (int)_height - r);
             Circle circle = new Circle(x, y, r, mass);
@@ -91,27 +91,23 @@ public class Canvas
     
     private void CheckBallCollisions(Circle c1, Circle c2)
     {
-        if (((c1.X - c2.X) * (c1.X - c2.X))
-            + ((c1.Y - c2.Y) * (c1.Y - c2.Y))
-            <= ((c1.R + c2.R) * (c1.R + c2.R)))
+        if ((c1.X - c2.X) * (c1.X - c2.X)
+            + (c1.Y - c2.Y) * (c1.Y - c2.Y)
+            <= (c1.R + c2.R) * (c1.R + c2.R))
         {
             double fi = Math.Atan(Math.Abs(c1.Y - c2.Y) / Math.Abs(c1.X - c2.X));
-            double v1 = Math.Sqrt((c1.VelY * c1.VelY) + (c1.VelX * c1.VelX));
-            double v2 = Math.Sqrt((c2.VelY * c2.VelY) + (c2.VelX * c2.VelX));
-            double alpha = Math.Acos(c1.VelY / v1);
-            double beta = Math.Acos(c2.VelY / v2);
-            c1.VelX = ((v1 * Math.Cos(alpha - fi) * (c1.Mass - c2.Mass) + (2 * c2.Mass * v2 * Math.Cos(beta - fi))) /
-                       (c1.Mass + c2.Mass)) * Math.Cos(fi) + v1 * Math.Sin(alpha - fi) * Math.Cos(fi + Math.PI / 2);
-            c1.VelY = ((v1 * Math.Cos(alpha - fi) * (c1.Mass - c2.Mass) + (2 * c2.Mass * v2 * Math.Cos(beta - fi))) /
-                       (c1.Mass + c2.Mass)) * Math.Sin(fi) + v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2);
-            c2.VelX = ((v2 * Math.Cos(beta - fi) * (c2.Mass - c1.Mass) + (2 * c1.Mass * v1 * Math.Cos(alpha - fi)) /
-                       (c1.Mass + c2.Mass))) * Math.Cos(fi) + v1 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2);
-            c2.VelY = ((v2 * Math.Cos(beta - fi) * (c2.Mass - c1.Mass) + (2 * c1.Mass * v1 * Math.Cos(alpha - fi)) /
-                       (c1.Mass + c2.Mass))) * Math.Sin(fi) + v1 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2);
-            c1.X += c1.VelX;
-            c1.Y += c1.VelY;
-            c2.X += c2.VelX;
-            c2.Y += c2.VelY;
+            double v1 = Math.Sqrt(c1.VelY * c1.VelY + c1.VelX * c1.VelX);
+            double v2 = Math.Sqrt(c2.VelY * c2.VelY + c2.VelX * c2.VelX);
+            double alpha = Math.Acos(c1.VelX / v1);
+            double beta = Math.Acos(c2.VelX / v2);
+            c1.VelX = (v1 * Math.Cos(alpha - fi) * (c1.Mass - c2.Mass) + 2 * c2.Mass * v2 * Math.Cos(beta - fi)) /
+                       (c1.Mass + c2.Mass) * Math.Cos(fi) + v1 * Math.Sin(alpha - fi) * Math.Cos(fi + Math.PI / 2);
+            c1.VelY = (v1 * Math.Cos(alpha - fi) * (c1.Mass - c2.Mass) + 2 * c2.Mass * v2 * Math.Cos(beta - fi)) /
+                       (c1.Mass + c2.Mass) * Math.Sin(fi) + v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2);
+            c2.VelX = (v2 * Math.Cos(beta - fi) * (c2.Mass - c1.Mass) + 2 * c1.Mass * v1 * Math.Cos(alpha - fi)) /
+                       (c1.Mass + c2.Mass) * Math.Cos(fi) + v1 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2);
+            c2.VelY = (v2 * Math.Cos(beta - fi) * (c2.Mass - c1.Mass) + 2 * c1.Mass * v1 * Math.Cos(alpha - fi)) /
+                       (c1.Mass + c2.Mass) * Math.Sin(fi) + v1 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2);
             c1.ChangeX = !c1.ChangeX;
             c1.ChangeY = !c1.ChangeY;
             c2.ChangeX = !c2.ChangeX;
@@ -122,11 +118,11 @@ public class Canvas
     public void Move(Circle c)
     {
         CheckEdgeCollisions(c);
-        /*for (int i = 0; i < _circles.Count; i++)
+        /*foreach (var circle in _circles)
         {
-            if (c != _circles[i])
+            if (c != circle)
             {
-                CheckBallCollisions(c, _circles[i]);
+                CheckBallCollisions(c, circle);
             }
         }*/
     }
