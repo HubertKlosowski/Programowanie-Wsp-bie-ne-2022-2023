@@ -22,6 +22,14 @@ public class Circle : INotifyPropertyChanged
         _r = r;
         _mass = mass;
     }
+
+    public Circle(double x, double y, int mass)
+    {
+        _x = x;
+        _y = y;
+        _mass = mass;
+        _r = mass * 5;
+    }
     
     public string? Color
     {

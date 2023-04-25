@@ -15,7 +15,8 @@ public abstract class ModelApi
     public abstract double GetCanvasWidth();
     public abstract double GetCanvasHeight();
     public abstract ObservableCollection<Circle> GetBalls();
-    public abstract void Update(object? state);
+    public abstract void Update();
     public abstract void Stop();
     public abstract void Start();
+    public abstract void AddCircle(Circle circle);
 }

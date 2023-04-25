@@ -2,7 +2,7 @@
 
 public abstract class DataApi
 {
-    public static Canvas Canvas = new (700, 450);
+    public Canvas Canvas = new (700, 450);
     public static DataApi Create()
     {
         return new DataApiImplementation();

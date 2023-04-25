@@ -15,7 +15,7 @@ public class ModelApiImplementation : ModelApi
         _logicApi = logicApi;
     }
 
-    public override void Update(object? state)
+    public override void Update()
     {
         _logicApi.Update();
     }
@@ -24,6 +24,7 @@ public class ModelApiImplementation : ModelApi
     {
         return _movingCircles;
     }
+    
     public override void Generate(int count)
     {
         _logicApi.AddCircles(count);
@@ -34,16 +35,24 @@ public class ModelApiImplementation : ModelApi
             _movingCircles.Add(list[i]);
         }
     }
+    
+    public override void AddCircle(Circle circle)
+    {
+        _logicApi.AddCircle(circle);
+        _movingCircles.Add(circle);
+    }
+    
     public override void Reset()
     {
         _movingCircles.Clear();
-        _logicApi.GetCircles().Clear();
         _logicApi.Reset();
     }
+    
     public override double GetCanvasWidth()
     {
         return _logicApi.GetCanvasWidth();
     }
+    
     public override double GetCanvasHeight()
     {
         return _logicApi.GetCanvasHeight();

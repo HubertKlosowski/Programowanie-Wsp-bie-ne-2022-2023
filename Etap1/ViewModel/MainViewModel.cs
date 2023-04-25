@@ -70,7 +70,7 @@ public class MainViewModel : INotifyPropertyChanged
             _modelApi.Generate(3);
         }
         LogicApi.ShouldRun = true;
-        _modelApi.Update(null);
+        _modelApi.Update();
         Enable = false;
     }
     
@@ -86,14 +86,14 @@ public class MainViewModel : INotifyPropertyChanged
     {
         LogicApi.ShouldRun = true;
         _modelApi.Start();
-        _modelApi.Update(null);
+        _modelApi.Update();
     }
     
     private void Stop()
     {
         LogicApi.ShouldRun = false;
         _modelApi.Stop();
-        _modelApi.Update(null);
+        _modelApi.Update();
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;

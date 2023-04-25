@@ -22,7 +22,7 @@ public class Canvas
         for (int i = 0; i < count; i++)
         {
             int mass = random.Next(1, 5);
-            int r = mass * 10;
+            int r = mass * 5;
             int x = random.Next(r, (int)_width - r);
             int y = random.Next(r, (int)_height - r);
             Circle circle = new Circle(x, y, r, mass);
@@ -87,6 +87,14 @@ public class Canvas
     {
         get => _circles;
         set => _circles = value ?? throw new ArgumentNullException(nameof(value));
+    }
+    
+    public void AddCircle(Circle circle)
+    {
+        if (CheckInitialCoordinates(circle))
+            _circles.Add(circle);
+        else
+            throw new ArgumentException("Błąd!! Niepoprawne współrzędne.");
     }
     
     private void CheckBallCollisions(Circle c1, Circle c2)

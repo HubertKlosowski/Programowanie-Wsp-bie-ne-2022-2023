@@ -25,26 +25,18 @@ public class DataTest
     [Fact]
     public void TestCanvasData()
     {
-        Canvas canvas = new Canvas(700, 450);
-        Assert.Equal(700, canvas.Width);
-        Assert.Equal(450, canvas.Height);
+        DataApi data = DataApi.Create();
+        Assert.Equal(700, data.GetCanvasWidth());
+        Assert.Equal(450, data.GetCanvasHeight());
     }
     
     [Fact]
     public void TestCanvasAddCircles()
     {
-        Canvas canvas = new Canvas(700, 450);
-        canvas.AddCirclesToCanvas(3);
-        Assert.Equal(3, canvas.AllCircles.Count);
-    }
-    
-    [Fact]
-    public void TestCanvasAddCircles2()
-    {
-        Canvas canvas = new Canvas(700, 450);
-        canvas.AddCirclesToCanvas(3);
-        Assert.Equal(3, canvas.AllCircles.Count);
-        canvas.AddCirclesToCanvas(3);
-        Assert.Equal(6, canvas.AllCircles.Count);
+        DataApi data = DataApi.Create();
+        data.Canvas.AddCirclesToCanvas(3);
+        Assert.Equal(3, data.Canvas.AllCircles.Count);
+        data.Canvas.AllCircles.Clear();
+        Assert.Empty(data.Canvas.AllCircles);
     }
 }

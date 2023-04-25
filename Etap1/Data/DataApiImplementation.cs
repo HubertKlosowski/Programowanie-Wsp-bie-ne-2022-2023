@@ -32,7 +32,7 @@ public class DataApiImplementation : DataApi
     public override void AddCircle(Circle circle)
     {
         if (Canvas.CheckInitialCoordinates(circle))
-            Canvas.AllCircles.Add(circle);
+            Canvas.AddCircle(circle);
         else
             throw new ArgumentException("Błąd!! Niepoprawne współrzędne.");
     }

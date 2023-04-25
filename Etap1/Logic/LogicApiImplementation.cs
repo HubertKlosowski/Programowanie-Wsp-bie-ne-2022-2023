@@ -51,7 +51,7 @@ public class LogicApiImplementation : LogicApi
                         ManualResetEvent.WaitOne();
                         lock (circle)
                         {
-                            DataApi.Canvas.Move(circle);
+                            _dataApi.Canvas.Move(circle);
                         }
                         Thread.Sleep(1);
                     }
@@ -65,14 +65,15 @@ public class LogicApiImplementation : LogicApi
             thread.Start();
         }
     }
-
+    
     public override void Reset()
     {
-        foreach (Thread thread in Threads)
+        foreach (var thread in Threads)
         {
             thread.Interrupt();
         }
         Threads.Clear();
+        GetCircles().Clear();
     }
     
     public override void AddCircle(Circle circle)
