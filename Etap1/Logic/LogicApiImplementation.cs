@@ -51,7 +51,7 @@ public class LogicApiImplementation : LogicApi
                         ManualResetEvent.WaitOne();
                         lock (circle)
                         {
-                            _dataApi.Canvas.Move(circle);
+                            _dataApi.Canvas.MoveCircleOnCanvas(circle);
                         }
                         Thread.Sleep(1);
                     }

@@ -39,14 +39,11 @@ public class ModelTest
         Circle circle = new Circle(200, 50, 1);
         circle.VelY = -1;
         circle.VelX = 1;
-        circle.ChangeY = true;
         modelApi.AddCircle(circle);
         modelApi.Update();
-        Thread.Sleep(500);
-        Assert.Equal(38, circle.Y, 1e0);
-        Assert.Equal(234, circle.X, 1e0);
-        Assert.False(circle.ChangeY);
-        Assert.False(circle.ChangeX);
+        Thread.Sleep(600);
+        Assert.Equal(27, circle.Y, 1e0);
+        Assert.Equal(240, circle.X, 1e0);
         modelApi.Reset();
     }
 }

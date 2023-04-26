@@ -11,8 +11,6 @@ public class Circle : INotifyPropertyChanged
     private double _velX;
     private double _velY;
     private double _mass;
-    private bool _changeX = false;
-    private bool _changeY = false;
     private string? _color;
 
     public Circle(double x, double y, double r, double mass)
@@ -35,24 +33,6 @@ public class Circle : INotifyPropertyChanged
     {
         get => _color;
         set => _color = value;
-    }
-    
-    public bool ChangeY
-    {
-        get { return _changeY; }
-        set
-        {
-            _changeY = value;
-        }
-    }
-    
-    public bool ChangeX
-    {
-        get { return _changeX; }
-        set
-        {
-            _changeX = value;
-        }
     }
     
     public double X
@@ -97,6 +77,12 @@ public class Circle : INotifyPropertyChanged
     {
         get => _velY;
         set => _velY = value;
+    }
+    
+    public void Move()
+    {
+        X += VelX;
+        Y += VelY;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

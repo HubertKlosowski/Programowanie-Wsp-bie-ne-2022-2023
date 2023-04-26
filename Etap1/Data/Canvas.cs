@@ -38,17 +38,9 @@ public class Canvas
             circle.VelX = random.NextDouble() * 2 - 1;
             if (circle.VelX == 0)
                 circle.VelX -= 1;
-            if (circle.VelX > 0)
-                circle.ChangeX = true;
-            else
-                circle.ChangeX = false;
             circle.VelX = random.NextDouble() * 2 - 1;
             if (circle.VelY == 0)
                 circle.VelY -= 1;
-            if (circle.VelY > 0)
-                circle.ChangeY = true;
-            else
-                circle.ChangeY = false;
             _circles.Add(circle);
         }
     }
@@ -58,6 +50,11 @@ public class Canvas
         if (_circles.Count == 0)
         {
             return true;
+        }
+        if (newcircle.Y - newcircle.R < 0 || newcircle.Y + newcircle.R > _height
+            || newcircle.X - newcircle.R < 0 || newcircle.X + newcircle.R > _width)
+        {
+            return false;
         }
         for (int i = 0; i < _circles.Count; i++)
         {
@@ -97,105 +94,47 @@ public class Canvas
             throw new ArgumentException("Błąd!! Niepoprawne współrzędne.");
     }
     
-    private void CheckBallCollisions(Circle c1, Circle c2)
+    private void CheckBallCollisions(Circle c)
     {
-        if ((c1.X - c2.X) * (c1.X - c2.X)
-            + (c1.Y - c2.Y) * (c1.Y - c2.Y)
-            <= (c1.R + c2.R) * (c1.R + c2.R))
-        {
-            double fi = Math.Atan(Math.Abs(c1.Y - c2.Y) / Math.Abs(c1.X - c2.X));
-            double v1 = Math.Sqrt(c1.VelY * c1.VelY + c1.VelX * c1.VelX);
-            double v2 = Math.Sqrt(c2.VelY * c2.VelY + c2.VelX * c2.VelX);
-            double alpha = Math.Acos(c1.VelX / v1);
-            double beta = Math.Acos(c2.VelX / v2);
-            c1.VelX = (v1 * Math.Cos(alpha - fi) * (c1.Mass - c2.Mass) + 2 * c2.Mass * v2 * Math.Cos(beta - fi)) /
-                       (c1.Mass + c2.Mass) * Math.Cos(fi) + v1 * Math.Sin(alpha - fi) * Math.Cos(fi + Math.PI / 2);
-            c1.VelY = (v1 * Math.Cos(alpha - fi) * (c1.Mass - c2.Mass) + 2 * c2.Mass * v2 * Math.Cos(beta - fi)) /
-                       (c1.Mass + c2.Mass) * Math.Sin(fi) + v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2);
-            c2.VelX = (v2 * Math.Cos(beta - fi) * (c2.Mass - c1.Mass) + 2 * c1.Mass * v1 * Math.Cos(alpha - fi)) /
-                       (c1.Mass + c2.Mass) * Math.Cos(fi) + v1 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2);
-            c2.VelY = (v2 * Math.Cos(beta - fi) * (c2.Mass - c1.Mass) + 2 * c1.Mass * v1 * Math.Cos(alpha - fi)) /
-                       (c1.Mass + c2.Mass) * Math.Sin(fi) + v1 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2);
-            c1.ChangeX = !c1.ChangeX;
-            c1.ChangeY = !c1.ChangeY;
-            c2.ChangeX = !c2.ChangeX;
-            c2.ChangeY = !c2.ChangeY;
-        }
-    }
-
-    public void Move(Circle c)
-    {
-        CheckEdgeCollisions(c);
         foreach (var circle in _circles)
         {
-            if (c != circle)
+            if ((c.X - circle.X) * (c.X - circle.X)
+                + (c.Y - circle.Y) * (c.Y - circle.Y)
+                <= (c.R + circle.R) * (c.R + circle.R))
             {
-                CheckBallCollisions(c, circle);
+                double fi = Math.Atan(Math.Abs(c.Y - circle.Y) / Math.Abs(c.X - circle.X));
+                double v1 = Math.Sqrt(c.VelY * c.VelY + c.VelX * c.VelX);
+                double v2 = Math.Sqrt(circle.VelY * circle.VelY + circle.VelX * circle.VelX);
+                double alpha = Math.Acos(c.VelX / v1);
+                double beta = Math.Acos(circle.VelX / v2);
+                c.VelX = (v1 * Math.Cos(alpha - fi) * (c.Mass - circle.Mass) + 2 * circle.Mass * v2 * Math.Cos(beta - fi)) /
+                    (c.Mass + circle.Mass) * Math.Cos(fi) + v1 * Math.Sin(alpha - fi) * Math.Cos(fi + Math.PI / 2);
+                c.VelY = (v1 * Math.Cos(alpha - fi) * (c.Mass - circle.Mass) + 2 * circle.Mass * v2 * Math.Cos(beta - fi)) /
+                    (c.Mass + circle.Mass) * Math.Sin(fi) + v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2);
+                circle.VelX = (v2 * Math.Cos(beta - fi) * (circle.Mass - c.Mass) + 2 * c.Mass * v1 * Math.Cos(alpha - fi)) /
+                    (c.Mass + circle.Mass) * Math.Cos(fi) + v1 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2);
+                circle.VelY = (v2 * Math.Cos(beta - fi) * (circle.Mass - c.Mass) + 2 * c.Mass * v1 * Math.Cos(alpha - fi)) /
+                    (c.Mass + circle.Mass) * Math.Sin(fi) + v1 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2);
             }
         }
     }
     
     private void CheckEdgeCollisions(Circle circle)
     {
-        if (circle.Y > _height - circle.R || circle.ChangeY)
+        if (circle.Y >= _height - circle.R || circle.Y <= circle.R)
         {
-            if (circle.VelY > 0)
-                circle.Y -= circle.VelY;
-            else
-                circle.Y += circle.VelY;
-            circle.ChangeY = true;
+            circle.VelY *= -1;
         }
-        if (circle.Y < circle.R)
+        if (circle.X >= _width - circle.R || circle.X <= circle.R)
         {
-            if (circle.VelY > 0)
-                circle.Y += circle.VelY;
-            else
-                circle.Y -= circle.VelY;
-            circle.ChangeY = false;
+            circle.VelX *= -1;
         }
-        if (!circle.ChangeY)
-        {
-            if (circle.VelY > 0)
-                circle.Y += circle.VelY;
-            else
-                circle.Y -= circle.VelY;
-        }
-        if (circle.ChangeY)
-        {
-            if (circle.VelY > 0)
-                circle.Y -= circle.VelY;
-            else
-                circle.Y += circle.VelY;
-        }
-        if (circle.X > _width - circle.R || circle.ChangeX)
-        {
-            if (circle.VelX > 0)
-                circle.X -= circle.VelX;
-            else
-                circle.X += circle.VelX;
-            circle.ChangeX = true;
-        }
-        if (circle.X < circle.R)
-        {
-            if (circle.VelX > 0)
-                circle.X += circle.VelX;
-            else
-                circle.X -= circle.VelX;
-            circle.ChangeX = false;
-        }
-        if (!circle.ChangeX)
-        {
-            if (circle.VelX > 0)
-                circle.X += circle.VelX;
-            else
-                circle.X -= circle.VelX;
-        }
-        if (circle.ChangeX)
-        {
-            if (circle.VelX > 0)
-                circle.X -= circle.VelX;
-            else
-                circle.X += circle.VelX;
-        }
+    }
+
+    public void MoveCircleOnCanvas(Circle c)
+    {
+        c.Move();
+        CheckEdgeCollisions(c);
+        //CheckBallCollisions(c);
     }
 }
