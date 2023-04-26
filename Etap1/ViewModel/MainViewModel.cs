@@ -65,7 +65,7 @@ public class MainViewModel : INotifyPropertyChanged
         {
             _modelApi.Generate(Int32.Parse(NumOfBalls!));
         }
-        catch (Exception)
+        catch (Exception e)
         {
             _modelApi.Generate(3);
         }
@@ -76,7 +76,6 @@ public class MainViewModel : INotifyPropertyChanged
     private void ResetBalls()
     {
         _modelApi.Reset();
-        LogicApi.Cancel.Cancel();
         Enable = true;
         NumOfBalls = "";
     }
@@ -84,13 +83,11 @@ public class MainViewModel : INotifyPropertyChanged
     private void Start()
     {
         _modelApi.Start();
-        _modelApi.Update();
     }
     
     private void Stop()
     {
         _modelApi.Stop();
-        _modelApi.Update();
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;

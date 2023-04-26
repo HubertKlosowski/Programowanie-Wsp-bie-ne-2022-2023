@@ -1,5 +1,4 @@
 ﻿using Data;
-using System.Threading;
 
 namespace Logic;
 
@@ -10,7 +9,6 @@ public class LogicApiImplementation : LogicApi
     public LogicApiImplementation(DataApi dataApi)
     {
         _dataApi = dataApi;
-        Cancel = new CancellationTokenSource();
     }
     
     public override List<Circle> GetCircles()
@@ -44,9 +42,9 @@ public class LogicApiImplementation : LogicApi
     {
         foreach (Circle circle in GetCircles())
         {
-            Task task = Task.Run(() =>
+            Thread thread = new Thread(() =>
             {
-                while (!Cancel.Token.IsCancellationRequested)
+                while (ShouldRun)
                 {
                     try
                     {
@@ -57,27 +55,24 @@ public class LogicApiImplementation : LogicApi
                         }
                         Thread.Sleep(1);
                     }
-                    catch (OperationCanceledException)
+                    catch (ThreadInterruptedException)
                     {
                         return;
                     }
                 }
-            }, Cancel.Token);
-            Tasks.Add(task);
+            });
+            Threads.Add(thread);
+            thread.Start();
         }
     }
     
     public override void Reset()
     {
-        foreach (var task in Tasks)
+        foreach (var thread in Threads)
         {
-            if (!task.IsCompleted)
-            {
-                Cancel.Cancel();
-                task.Wait();
-            }
+            thread.Interrupt();
         }
-        Tasks.Clear();
+        Threads.Clear();
         GetCircles().Clear();
     }
     
@@ -88,13 +83,13 @@ public class LogicApiImplementation : LogicApi
     
     public override void Stop()
     {
-        if (!Cancel.IsCancellationRequested)
-            Cancel.Cancel();
+        if (!ShouldRun)
+            ManualResetEvent.WaitOne();
     }
     
     public override void Start()
     {
-        if (Cancel.IsCancellationRequested)
-            Cancel = new CancellationTokenSource();
+        if (ShouldRun)
+            ManualResetEvent.Set();
     }
 }
