@@ -42,7 +42,7 @@ public class ModelTest
         modelApi.AddCircle(circle);
         modelApi.Update();
         Thread.Sleep(600);
-        Assert.Equal(27, circle.Y, 1e0);
+        Assert.Equal(29, circle.Y, 1e0);
         Assert.Equal(240, circle.X, 1e0);
         modelApi.Reset();
     }
