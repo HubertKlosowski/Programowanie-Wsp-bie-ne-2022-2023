@@ -65,7 +65,7 @@ public class MainViewModel : INotifyPropertyChanged
         {
             _modelApi.Generate(Int32.Parse(NumOfBalls!));
         }
-        catch (Exception e)
+        catch (Exception)
         {
             _modelApi.Generate(3);
         }
@@ -83,6 +83,7 @@ public class MainViewModel : INotifyPropertyChanged
     private void Start()
     {
         _modelApi.Start();
+        _modelApi.Update();
     }
     
     private void Stop()
