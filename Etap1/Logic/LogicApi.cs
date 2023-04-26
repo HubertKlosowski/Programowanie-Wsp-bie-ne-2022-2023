@@ -4,8 +4,8 @@ namespace Logic;
 
 public abstract class LogicApi
 {
-    public static volatile bool ShouldRun = true;
-    public static List<Thread> Threads = new();
+    public static CancellationTokenSource Cancel = new();
+    public static List<Task> Tasks = new();
     public static ManualResetEvent ManualResetEvent = new(true);
     
     public static LogicApi Create(DataApi dataApi = default!)

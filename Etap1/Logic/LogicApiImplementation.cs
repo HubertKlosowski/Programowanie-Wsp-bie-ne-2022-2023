@@ -1,4 +1,5 @@
 ﻿using Data;
+using System.Threading;
 
 namespace Logic;
 
@@ -9,6 +10,7 @@ public class LogicApiImplementation : LogicApi
     public LogicApiImplementation(DataApi dataApi)
     {
         _dataApi = dataApi;
+        Cancel = new CancellationTokenSource();
     }
     
     public override List<Circle> GetCircles()
@@ -42,9 +44,9 @@ public class LogicApiImplementation : LogicApi
     {
         foreach (Circle circle in GetCircles())
         {
-            Thread thread = new Thread(() =>
+            Task task = Task.Run(() =>
             {
-                while (ShouldRun)
+                while (!Cancel.Token.IsCancellationRequested)
                 {
                     try
                     {
@@ -55,24 +57,27 @@ public class LogicApiImplementation : LogicApi
                         }
                         Thread.Sleep(1);
                     }
-                    catch (ThreadInterruptedException)
+                    catch (OperationCanceledException)
                     {
                         return;
                     }
                 }
-            });
-            Threads.Add(thread);
-            thread.Start();
+            }, Cancel.Token);
+            Tasks.Add(task);
         }
     }
     
     public override void Reset()
     {
-        foreach (var thread in Threads)
+        foreach (var task in Tasks)
         {
-            thread.Interrupt();
+            if (!task.IsCompleted)
+            {
+                Cancel.Cancel();
+                task.Wait();
+            }
         }
-        Threads.Clear();
+        Tasks.Clear();
         GetCircles().Clear();
     }
     
@@ -83,13 +88,13 @@ public class LogicApiImplementation : LogicApi
     
     public override void Stop()
     {
-        if (!ShouldRun)
-            ManualResetEvent.WaitOne();
+        if (!Cancel.IsCancellationRequested)
+            Cancel.Cancel();
     }
     
     public override void Start()
     {
-        if (ShouldRun)
-            ManualResetEvent.Set();
+        if (Cancel.IsCancellationRequested)
+            Cancel = new CancellationTokenSource();
     }
 }

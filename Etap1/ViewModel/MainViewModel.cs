@@ -63,13 +63,12 @@ public class MainViewModel : INotifyPropertyChanged
     {
         try
         {
-            _modelApi.Generate(Int32.Parse(NumOfBalls));
+            _modelApi.Generate(Int32.Parse(NumOfBalls!));
         }
-        catch (Exception e)
+        catch (Exception)
         {
             _modelApi.Generate(3);
         }
-        LogicApi.ShouldRun = true;
         _modelApi.Update();
         Enable = false;
     }
@@ -77,21 +76,19 @@ public class MainViewModel : INotifyPropertyChanged
     private void ResetBalls()
     {
         _modelApi.Reset();
-        LogicApi.ShouldRun = false;
+        LogicApi.Cancel.Cancel();
         Enable = true;
         NumOfBalls = "";
     }
     
     private void Start()
     {
-        LogicApi.ShouldRun = true;
         _modelApi.Start();
         _modelApi.Update();
     }
     
     private void Stop()
     {
-        LogicApi.ShouldRun = false;
         _modelApi.Stop();
         _modelApi.Update();
     }
