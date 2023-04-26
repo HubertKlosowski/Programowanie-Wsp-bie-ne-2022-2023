@@ -7,15 +7,15 @@ public class Circle : INotifyPropertyChanged
 {
     private double _x;
     private double _y;
-    private int _r;
+    private double _r;
     private double _velX;
     private double _velY;
-    private int _mass;
+    private double _mass;
     private bool _changeX = false;
     private bool _changeY = false;
     private string? _color;
 
-    public Circle(double x, double y, int r, int mass)
+    public Circle(double x, double y, double r, double mass)
     {
         _x = x;
         _y = y;
@@ -23,12 +23,12 @@ public class Circle : INotifyPropertyChanged
         _mass = mass;
     }
 
-    public Circle(double x, double y, int mass)
+    public Circle(double x, double y, double mass)
     {
         _x = x;
         _y = y;
         _mass = mass;
-        _r = mass * 5;
+        _r = mass * 20;
     }
     
     public string? Color
@@ -75,13 +75,13 @@ public class Circle : INotifyPropertyChanged
         }
     }
     
-    public int R
+    public double R
     {
         get => _r;
         set => _r = value;
     }
 
-    public int Mass
+    public double Mass
     {
         get => _mass;
         set => _mass = value;

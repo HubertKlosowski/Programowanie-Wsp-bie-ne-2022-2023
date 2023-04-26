@@ -21,15 +21,15 @@ public class Canvas
         }
         for (int i = 0; i < count; i++)
         {
-            int mass = random.Next(1, 5);
-            int r = mass * 5;
-            int x = random.Next(r, (int)_width - r);
-            int y = random.Next(r, (int)_height - r);
+            double mass = random.NextDouble() * (1 - 0.1) + 0.1;
+            double r = mass * 20;
+            double x = random.NextDouble() * (_width - r) + r;
+            double y = random.NextDouble() * (_height - r) + r;
             Circle circle = new Circle(x, y, r, mass);
             while (!CheckInitialCoordinates(circle))
             {
-                circle.X = random.Next(r, (int)_width - r);
-                circle.Y = random.Next(r, (int)_height - r);
+                circle.X = random.NextDouble() * (_width - r) + r;
+                circle.Y = random.NextDouble() * (_height - r) + r;
                 if (CheckInitialCoordinates(circle))
                 {
                     break;
@@ -126,13 +126,13 @@ public class Canvas
     public void Move(Circle c)
     {
         CheckEdgeCollisions(c);
-        /*foreach (var circle in _circles)
+        foreach (var circle in _circles)
         {
             if (c != circle)
             {
                 CheckBallCollisions(c, circle);
             }
-        }*/
+        }
     }
     
     private void CheckEdgeCollisions(Circle circle)
