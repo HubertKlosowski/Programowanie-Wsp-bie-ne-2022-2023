@@ -46,4 +46,25 @@ public class ModelTest
         Assert.Equal(240, circle.X, 1e0);
         modelApi.Reset();
     }
+
+    [Fact]
+    public void TestBallCollisions()
+    {
+        ModelApi modelApi = ModelApi.Create(LogicApi.Create(DataApi.Create()));
+        Circle circle = new Circle(200, 50, 1);
+        circle.VelY = 1;
+        circle.VelX = 1;
+        Circle circle2 = new Circle(200, 100, 1);
+        circle2.VelY = -1;
+        circle2.VelX = 1;
+        modelApi.AddCircle(circle);
+        modelApi.AddCircle(circle2);
+        modelApi.Update();
+        Thread.Sleep(200);
+        Assert.Equal(46, circle.Y, 1e0);
+        Assert.Equal(210, circle.X, 1e0);
+        Assert.Equal(106, circle2.Y, 1e0);
+        Assert.Equal(210, circle2.X, 1e0);
+        modelApi.Reset();
+    }
 }
