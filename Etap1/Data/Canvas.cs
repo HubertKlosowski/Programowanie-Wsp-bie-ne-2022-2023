@@ -51,8 +51,8 @@ public class Canvas
         {
             return true;
         }
-        if (newcircle.Y - newcircle.R < 0 || newcircle.Y + newcircle.R > _height
-            || newcircle.X - newcircle.R < 0 || newcircle.X + newcircle.R > _width)
+        if (newcircle.Y - newcircle.R <= 0 || newcircle.Y + newcircle.R >= _height
+            || newcircle.X - newcircle.R <= 0 || newcircle.X + newcircle.R >= _width)
         {
             return false;
         }
@@ -96,25 +96,27 @@ public class Canvas
     
     private void CheckBallCollisions(Circle c)
     {
-        foreach (var circle in _circles)
+        foreach (Circle circle in _circles)
         {
-            if ((c.X - circle.X) * (c.X - circle.X)
-                + (c.Y - circle.Y) * (c.Y - circle.Y)
-                <= (c.R + circle.R) * (c.R + circle.R))
+            if (c != circle && Math.Pow(c.X - circle.X, 2) + Math.Pow(c.Y - circle.Y, 2) <= Math.Pow(c.R + circle.R, 2))
             {
-                double fi = Math.Atan(Math.Abs(c.Y - circle.Y) / Math.Abs(c.X - circle.X));
+                double fi = Math.Atan2(c.Y - circle.Y, c.X - circle.X);
                 double v1 = Math.Sqrt(c.VelY * c.VelY + c.VelX * c.VelX);
                 double v2 = Math.Sqrt(circle.VelY * circle.VelY + circle.VelX * circle.VelX);
-                double alpha = Math.Acos(c.VelX / v1);
-                double beta = Math.Acos(circle.VelX / v2);
+                double alpha = Math.Atan2(c.VelY, c.VelX);
+                double beta = Math.Atan2(circle.VelY, circle.VelX);
                 c.VelX = (v1 * Math.Cos(alpha - fi) * (c.Mass - circle.Mass) + 2 * circle.Mass * v2 * Math.Cos(beta - fi)) /
-                    (c.Mass + circle.Mass) * Math.Cos(fi) + v1 * Math.Sin(alpha - fi) * Math.Cos(fi + Math.PI / 2);
+                    (c.Mass + circle.Mass) * Math.Cos(fi) + v1 * Math.Sin(alpha - fi) * Math.Cos(fi + Math.PI / 2) /
+                    (c.Mass + circle.Mass);
                 c.VelY = (v1 * Math.Cos(alpha - fi) * (c.Mass - circle.Mass) + 2 * circle.Mass * v2 * Math.Cos(beta - fi)) /
-                    (c.Mass + circle.Mass) * Math.Sin(fi) + v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2);
+                    (c.Mass + circle.Mass) * Math.Sin(fi) + v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2) /
+                    (c.Mass + circle.Mass);
                 circle.VelX = (v2 * Math.Cos(beta - fi) * (circle.Mass - c.Mass) + 2 * c.Mass * v1 * Math.Cos(alpha - fi)) /
-                    (c.Mass + circle.Mass) * Math.Cos(fi) + v1 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2);
+                    (c.Mass + circle.Mass) * Math.Cos(fi) + v2 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2) /
+                    (c.Mass + circle.Mass);
                 circle.VelY = (v2 * Math.Cos(beta - fi) * (circle.Mass - c.Mass) + 2 * c.Mass * v1 * Math.Cos(alpha - fi)) /
-                    (c.Mass + circle.Mass) * Math.Sin(fi) + v1 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2);
+                    (c.Mass + circle.Mass) * Math.Sin(fi) + v2 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2) / 
+                    (c.Mass + circle.Mass);
             }
         }
     }
@@ -133,8 +135,8 @@ public class Canvas
 
     public void MoveCircleOnCanvas(Circle c)
     {
-        c.Move();
+        CheckBallCollisions(c);
         CheckEdgeCollisions(c);
-        //CheckBallCollisions(c);
+        c.Move();
     }
 }
