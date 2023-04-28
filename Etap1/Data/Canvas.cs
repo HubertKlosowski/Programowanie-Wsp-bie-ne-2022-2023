@@ -21,7 +21,7 @@ public class Canvas
         }
         for (int i = 0; i < count; i++)
         {
-            double mass = random.NextDouble() * (1 - 0.1) + 0.1;
+            double mass = random.NextDouble() * (1 - 0.5) + 0.5;
             double r = mass * 20;
             double x = random.NextDouble() * (_width - r) + r;
             double y = random.NextDouble() * (_height - r) + r;
