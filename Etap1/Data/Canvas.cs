@@ -106,17 +106,13 @@ public class Canvas
                 double alpha = Math.Atan2(c.VelY, c.VelX);
                 double beta = Math.Atan2(circle.VelY, circle.VelX);
                 c.VelX = (v1 * Math.Cos(alpha - fi) * (c.Mass - circle.Mass) + 2 * circle.Mass * v2 * Math.Cos(beta - fi)) /
-                    (c.Mass + circle.Mass) * Math.Cos(fi) + v1 * Math.Sin(alpha - fi) * Math.Cos(fi + Math.PI / 2) /
-                    (c.Mass + circle.Mass);
+                    (c.Mass + circle.Mass) * Math.Cos(fi) + v1 * Math.Sin(alpha - fi) * Math.Cos(fi + Math.PI / 2);
                 c.VelY = (v1 * Math.Cos(alpha - fi) * (c.Mass - circle.Mass) + 2 * circle.Mass * v2 * Math.Cos(beta - fi)) /
-                    (c.Mass + circle.Mass) * Math.Sin(fi) + v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2) /
-                    (c.Mass + circle.Mass);
+                    (c.Mass + circle.Mass) * Math.Sin(fi) + v1 * Math.Sin(alpha - fi) * Math.Sin(fi + Math.PI / 2);
                 circle.VelX = (v2 * Math.Cos(beta - fi) * (circle.Mass - c.Mass) + 2 * c.Mass * v1 * Math.Cos(alpha - fi)) /
-                    (c.Mass + circle.Mass) * Math.Cos(fi) + v2 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2) /
-                    (c.Mass + circle.Mass);
+                    (c.Mass + circle.Mass) * Math.Cos(fi) + v2 * Math.Sin(beta - fi) * Math.Cos(fi + Math.PI / 2);
                 circle.VelY = (v2 * Math.Cos(beta - fi) * (circle.Mass - c.Mass) + 2 * c.Mass * v1 * Math.Cos(alpha - fi)) /
-                    (c.Mass + circle.Mass) * Math.Sin(fi) + v2 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2) / 
-                    (c.Mass + circle.Mass);
+                    (c.Mass + circle.Mass) * Math.Sin(fi) + v2 * Math.Sin(beta - fi) * Math.Sin(fi + Math.PI / 2);
             }
         }
     }

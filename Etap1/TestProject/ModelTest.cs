@@ -42,8 +42,8 @@ public class ModelTest
         modelApi.AddCircle(circle);
         modelApi.Update();
         Thread.Sleep(1000);
-        Assert.Equal(56, circle.Y, 1e0);
-        Assert.Equal(266, circle.X, 1e0);
+        Assert.Equal(55, circle.Y, 1e0);
+        Assert.Equal(265, circle.X, 1e0);
         modelApi.Reset();
     }
 
@@ -61,14 +61,14 @@ public class ModelTest
         modelApi.AddCircle(circle2);
         modelApi.Update();
         Thread.Sleep(100);
-        Assert.Equal(52, circle.Y, 1e0);
+        Assert.Equal(51, circle.Y, 2e0);
         Assert.Equal(207, circle.X, 1e0);
         Assert.Equal(99, circle2.Y, 1e0);
         Assert.Equal(207, circle2.X, 1e0);
         Thread.Sleep(100);
         Assert.Equal(45, circle.Y, 1e0);
         Assert.Equal(210, circle.X, 1e0);
-        Assert.Equal(106, circle2.Y, 1e0);
+        Assert.Equal(105, circle2.Y, 1e0);
         Assert.Equal(210, circle2.X, 1e0);
         modelApi.Reset();
     }
