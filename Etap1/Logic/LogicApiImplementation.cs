@@ -43,54 +43,51 @@ public class LogicApiImplementation : LogicApi
     {
         foreach (Circle circle in GetCircles())
         {
-            Thread thread = new Thread(() =>
+            CancellationToken token = Cancellation.Token;
+            Task task = Task.Run(async () =>
             {
-                while (ShouldRun)
+                while (!token.IsCancellationRequested)
                 {
                     try
                     {
-                        ManualResetEvent.WaitOne();
+                        token.ThrowIfCancellationRequested();
                         lock (_lock)
                         {
                             _dataApi.Canvas.MoveCircleOnCanvas(circle);
                         }
-                        Thread.Sleep(1);
+                        await Task.Delay(1);
                     }
-                    catch (ThreadInterruptedException)
+                    catch (OperationCanceledException)
                     {
                         return;
                     }
                 }
-            });
-            Threads.Add(thread);
-            thread.Start();
+            }, token);
+            Tasks.Add(task);
         }
     }
-    
+
+
     public override void Reset()
     {
-        foreach (var thread in Threads)
-        {
-            thread.Interrupt();
-        }
-        Threads.Clear();
+        Tasks.Clear();
         GetCircles().Clear();
     }
-    
+
     public override void AddCircle(Circle circle)
     {
         _dataApi.AddCircle(circle);
     }
-    
+
     public override void Stop()
     {
-        if (!ShouldRun)
-            ManualResetEvent.WaitOne();
+        Cancellation.Cancel();
+        Task.WaitAll(Tasks.ToArray());
     }
-    
+
+
     public override void Start()
     {
-        if (ShouldRun)
-            ManualResetEvent.Set();
+        Cancellation = new CancellationTokenSource();
     }
 }

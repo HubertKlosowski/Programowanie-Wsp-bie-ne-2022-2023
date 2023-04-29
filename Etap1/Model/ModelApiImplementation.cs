@@ -17,7 +17,6 @@ public class ModelApiImplementation : ModelApi
 
     public override void Update()
     {
-        _logicApi.ShouldRun = true;
         _logicApi.Update();
     }
 
@@ -45,7 +44,6 @@ public class ModelApiImplementation : ModelApi
     
     public override void Reset()
     {
-        _logicApi.ShouldRun = false;
         _movingCircles.Clear();
         _logicApi.Reset();
     }
@@ -62,13 +60,13 @@ public class ModelApiImplementation : ModelApi
     
     public override void Stop()
     {
-        _logicApi.ShouldRun = false;
+        _logicApi.Cancellation.Cancel();
         _logicApi.Stop();
     }
     
     public override void Start()
     {
-        _logicApi.ShouldRun = true;
+        _logicApi.Cancellation = new();
         _logicApi.Start();
     }
 }
