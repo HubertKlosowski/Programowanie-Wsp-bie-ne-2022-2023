@@ -5,6 +5,7 @@ namespace Logic;
 public class LogicApiImplementation : LogicApi
 {
     private DataApi _dataApi;
+    private object _lock = new ();
 
     public LogicApiImplementation(DataApi dataApi)
     {
@@ -49,7 +50,7 @@ public class LogicApiImplementation : LogicApi
                     try
                     {
                         ManualResetEvent.WaitOne();
-                        lock (circle)
+                        lock (_lock)
                         {
                             _dataApi.Canvas.MoveCircleOnCanvas(circle);
                         }
