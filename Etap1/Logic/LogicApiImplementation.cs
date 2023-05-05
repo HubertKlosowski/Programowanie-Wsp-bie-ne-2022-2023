@@ -6,6 +6,7 @@ public class LogicApiImplementation : LogicApi
 {
     private DataApi _dataApi;
     private object _lock = new ();
+    private List<Task> _tasks = new();
 
     public LogicApiImplementation(DataApi dataApi)
     {
@@ -63,14 +64,13 @@ public class LogicApiImplementation : LogicApi
                     }
                 }
             }, token);
-            Tasks.Add(task);
+            _tasks.Add(task);
         }
     }
-
-
+    
     public override void Reset()
     {
-        Tasks.Clear();
+        _tasks.Clear();
         GetCircles().Clear();
     }
 
@@ -82,10 +82,9 @@ public class LogicApiImplementation : LogicApi
     public override void Stop()
     {
         Cancellation.Cancel();
-        Task.WaitAll(Tasks.ToArray());
+        Task.WaitAll(_tasks.ToArray());
     }
-
-
+    
     public override void Start()
     {
         Cancellation = new CancellationTokenSource();
