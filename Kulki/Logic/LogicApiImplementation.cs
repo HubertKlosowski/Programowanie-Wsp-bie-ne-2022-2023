@@ -6,7 +6,6 @@ public class LogicApiImplementation : LogicApi
 {
     private DataApi _dataApi;
     private object _lock = new ();
-    private List<Task> _tasks = new();
 
     public LogicApiImplementation(DataApi dataApi)
     {
@@ -56,7 +55,7 @@ public class LogicApiImplementation : LogicApi
                         {
                             _dataApi.Canvas.MoveCircleOnCanvas(circle);
                         }
-                        await Task.Delay(1);
+                        await Task.Delay(1, token);
                     }
                     catch (OperationCanceledException)
                     {
@@ -64,13 +63,14 @@ public class LogicApiImplementation : LogicApi
                     }
                 }
             }, token);
-            _tasks.Add(task);
+            Tasks.Add(task);
         }
     }
-    
+
+
     public override void Reset()
     {
-        _tasks.Clear();
+        Tasks.Clear();
         GetCircles().Clear();
     }
 
@@ -82,9 +82,10 @@ public class LogicApiImplementation : LogicApi
     public override void Stop()
     {
         Cancellation.Cancel();
-        Task.WaitAll(_tasks.ToArray());
+        Task.WaitAll(Tasks.ToArray());
     }
-    
+
+
     public override void Start()
     {
         Cancellation = new CancellationTokenSource();

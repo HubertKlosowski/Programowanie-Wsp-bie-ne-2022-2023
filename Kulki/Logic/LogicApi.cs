@@ -4,6 +4,7 @@ namespace Logic;
 
 public abstract class LogicApi
 {
+    public List<Task> Tasks = new();
     public CancellationTokenSource Cancellation = new();
     
     public static LogicApi Create(DataApi dataApi = default!)
