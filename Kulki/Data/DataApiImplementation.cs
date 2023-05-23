@@ -27,15 +27,23 @@ public class DataApiImplementation : DataApi
         {
             Canvas.AddCirclesToCanvas(3);
         }
+        List<Circle> circles = Canvas.AllCircles;
+        foreach (var circle in circles)
+        {
+            Logger.LogDiagnosticData(circle);
+        }
     }
 
     public override void AddCircle(Circle circle)
     {
         if (Canvas.CheckInitialCoordinates(circle))
+        {
             Canvas.AddCircle(circle);
+            Logger.LogDiagnosticData(circle);
+        }
         else
+        {
             throw new ArgumentException("Błąd!! Niepoprawne współrzędne.");
+        }
     }
-    
-    
 }

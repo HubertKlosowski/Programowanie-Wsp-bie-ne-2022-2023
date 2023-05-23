@@ -54,8 +54,9 @@ public class LogicApiImplementation : LogicApi
                         lock (_lock)
                         {
                             _dataApi.Canvas.MoveCircleOnCanvas(circle);
+                            _dataApi.Logger.LogDiagnosticData(circle);
                         }
-                        await Task.Delay(1, token);
+                        await Task.Delay(10, token);
                     }
                     catch (OperationCanceledException)
                     {
@@ -66,8 +67,7 @@ public class LogicApiImplementation : LogicApi
             Tasks.Add(task);
         }
     }
-
-
+    
     public override void Reset()
     {
         Tasks.Clear();

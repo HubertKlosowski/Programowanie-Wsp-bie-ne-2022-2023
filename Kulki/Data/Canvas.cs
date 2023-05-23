@@ -25,7 +25,7 @@ public class Canvas
             double r = mass * 20;
             double x = random.NextDouble() * (_width - r) + r;
             double y = random.NextDouble() * (_height - r) + r;
-            Circle circle = new Circle(x, y, r, mass);
+            Circle circle = new Circle(x, y, r, mass, i);
             while (!CheckInitialCoordinates(circle))
             {
                 circle.X = random.NextDouble() * (_width - r) + r;

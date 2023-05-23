@@ -12,6 +12,7 @@ public class Circle : INotifyPropertyChanged
     private double _velY;
     private double _mass;
     private string? _color;
+    private int _id;
 
     public Circle(double x, double y, double r, double mass)
     {
@@ -27,6 +28,21 @@ public class Circle : INotifyPropertyChanged
         _y = y;
         _mass = mass;
         _r = mass * 20;
+    }
+    
+    public Circle(double x, double y, double r, double mass, int id)
+    {
+        _x = x;
+        _y = y;
+        _r = r;
+        _mass = mass;
+        _id = id;
+    }
+    
+    public int Id
+    {
+        get => _id;
+        set => _id = value;
     }
     
     public string? Color

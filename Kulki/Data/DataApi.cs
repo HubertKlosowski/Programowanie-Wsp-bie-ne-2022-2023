@@ -3,6 +3,9 @@
 public abstract class DataApi
 {
     public Canvas Canvas = new (700, 450);
+    
+    public Logger Logger = new Logger("log.xml");
+    
     public static DataApi Create()
     {
         return new DataApiImplementation();
