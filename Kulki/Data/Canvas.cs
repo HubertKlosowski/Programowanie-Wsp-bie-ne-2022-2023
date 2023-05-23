@@ -133,6 +133,5 @@ public class Canvas
     {
         CheckBallCollisions(c);
         CheckEdgeCollisions(c);
-        c.Move();
     }
 }
