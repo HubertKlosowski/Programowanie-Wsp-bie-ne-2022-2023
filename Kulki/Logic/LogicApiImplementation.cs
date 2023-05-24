@@ -54,7 +54,6 @@ public class LogicApiImplementation : LogicApi
                         lock (_lock)
                         {
                             _dataApi.Canvas.MoveCircleOnCanvas(circle);
-                            _dataApi.Logger.LogDiagnosticData(circle);
                         }
                         circle.Move();
                         await Task.Delay(10, token);

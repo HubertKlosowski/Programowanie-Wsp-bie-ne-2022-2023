@@ -1,34 +1,26 @@
-﻿using System.Xml.Serialization;
+﻿using System.Timers;
+using System.Xml.Serialization;
 using Data;
 
 public class Logger
 {
     private string _logFilePath;
-
     private Dictionary<int, CircleData> _circleDataMap;
-
-    public Logger(string logFilePath)
-    {
-        _logFilePath = logFilePath;
-        _circleDataMap = new Dictionary<int, CircleData>();
-        LoadLogData();
-    }
+    private System.Timers.Timer _timer;
 
     public Logger()
     {
         _circleDataMap = new Dictionary<int, CircleData>();
+        _timer = new System.Timers.Timer(10);
+        _timer.Elapsed += TimerElapsed!;
+        _timer.AutoReset = true;
+        _timer.Start();
     }
-    
+
     public string LogFilePath
     {
         get => _logFilePath;
         set => _logFilePath = value ?? throw new ArgumentNullException(nameof(value));
-    }
-    
-    public Dictionary<int, CircleData> CircleDataMap
-    {
-        get => _circleDataMap;
-        set => _circleDataMap = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     public void LogDiagnosticData(Circle circle)
@@ -65,26 +57,11 @@ public class Logger
             };
             _circleDataMap.Add(circle.Id, newCircleData);
         }
-        SaveLogData();
     }
 
-
-    private void LoadLogData()
+    private void TimerElapsed(object sender, ElapsedEventArgs e)
     {
-        if (File.Exists(_logFilePath))
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<CircleData>));
-            using (StreamReader reader = new StreamReader(_logFilePath))
-            {
-                List<CircleData> circleDataList = (List<CircleData>)serializer.Deserialize(reader);
-                _circleDataMap.Clear();
-                if (circleDataList != null)
-                    foreach (CircleData circleData in circleDataList)
-                    {
-                        _circleDataMap.TryAdd(circleData.Id, circleData);
-                    }
-            }
-        }
+        SaveLogData();
     }
 
     private void SaveLogData()
