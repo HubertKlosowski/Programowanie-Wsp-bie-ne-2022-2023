@@ -27,6 +27,7 @@ public class ModelApiImplementation : ModelApi
     
     public override void Generate(int count)
     {
+        _logicApi.SetLoggerPath("log.xml");
         _logicApi.AddCircles(count);
         List<Circle> list = _logicApi.GetCircles();
         for (int i = 0; i < count; i++)
