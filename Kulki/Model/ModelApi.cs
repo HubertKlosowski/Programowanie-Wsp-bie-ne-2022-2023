@@ -19,4 +19,5 @@ public abstract class ModelApi
     public abstract void Stop();
     public abstract void Start();
     public abstract void AddCircle(Circle circle);
+    public abstract void SetLoggerPath(string path);
 }

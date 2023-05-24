@@ -46,4 +46,9 @@ public class DataApiImplementation : DataApi
             throw new ArgumentException("Błąd!! Niepoprawne współrzędne.");
         }
     }
+    
+    public override void SetLoggerPath(string path)
+    {
+        Logger.LogFilePath = path;
+    }
 }

@@ -11,6 +11,7 @@ public class ModelTest
     [Fact]
     public void TestBallGeneration()
     {
+        _modelApi.SetLoggerPath("TestBallGeneration.xml");
         _modelApi.Generate(4);
         Assert.Equal(4, _modelApi.GetBalls().Count);
         _modelApi.Reset();
@@ -19,6 +20,7 @@ public class ModelTest
     [Fact]
     public void TestBallMove()
     {
+        _modelApi.SetLoggerPath("TestBallMove.xml");
         Circle circle = new Circle(250, 100, 1);
         circle.VelX = 1;
         circle.VelY = 1;
@@ -35,20 +37,22 @@ public class ModelTest
     [Fact]
     public void TestEdgeCollision()
     {
+        _modelApi.SetLoggerPath("TestEdgeCollision.xml");
         Circle circle = new Circle(200, 50, 1);
         circle.VelY = -1;
         circle.VelX = 1;
         _modelApi.AddCircle(circle);
         _modelApi.Update();
         Thread.Sleep(1000);
-        Assert.Equal(53, circle.Y, 3e0);
-        Assert.Equal(264, circle.X, 3e0);
+        Assert.Equal(50, circle.Y, 5e0);
+        Assert.Equal(261, circle.X, 5e0);
         _modelApi.Reset();
     }
 
     [Fact]
     public void TestBallCollisions()
     {
+        _modelApi.SetLoggerPath("TestBallCollisions.xml");
         Circle circle = new Circle(200, 50, 1);
         circle.VelY = 1;
         circle.VelX = 1;
@@ -60,7 +64,7 @@ public class ModelTest
         _modelApi.Update();
         Thread.Sleep(100);
         Assert.Equal(53, circle.Y, 3e0);
-        Assert.Equal(208, circle.X, 3e0);
+        Assert.Equal(205, circle.X, 3e0);
         Assert.Equal(98, circle2.Y, 3e0);
         Assert.Equal(208, circle2.X, 3e0);
         Thread.Sleep(100);

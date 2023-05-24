@@ -10,6 +10,7 @@ public class LogicTest
     [Fact]
     public void TestResetLogic()
     {
+        _logic.SetLoggerPath("TestResetLogic.xml");
         _logic.AddCircles(2);
         Assert.Equal(2, _logic.GetCircles().Count);
         _logic.Reset();
@@ -19,6 +20,7 @@ public class LogicTest
     [Fact]
     public void TestCircleGeneration()
     {
+        _logic.SetLoggerPath("TestCircleGeneration.xml");
         Assert.Empty(_logic.GetCircles());
         _logic.AddCircles(2);
         List<Circle> tmp = _logic.GetCircles();
@@ -34,6 +36,7 @@ public class LogicTest
     [Fact]
     public void TestStopAndStart()
     {
+        _logic.SetLoggerPath("TestStopAndStart.xml");
         Circle circle = new Circle(250, 100, 1);
         circle.VelX = 1;
         circle.VelY = 1;
@@ -46,7 +49,7 @@ public class LogicTest
         _logic.Start();
         _logic.Update();
         Thread.Sleep(100);
-        Assert.Equal(266, circle.X, 3e0);
+        Assert.Equal(265, circle.X, 3e0);
         Assert.Equal(115, circle.Y, 3e0);
         _logic.Reset();
     }

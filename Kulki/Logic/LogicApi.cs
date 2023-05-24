@@ -20,4 +20,5 @@ public abstract class LogicApi
     public abstract void Reset();
     public abstract void Stop();
     public abstract void Start();
+    public abstract void SetLoggerPath(string path);
 }

@@ -4,6 +4,7 @@ using Data;
 public class Logger
 {
     private string _logFilePath;
+
     private Dictionary<int, CircleData> _circleDataMap;
 
     public Logger(string logFilePath)
@@ -11,6 +12,23 @@ public class Logger
         _logFilePath = logFilePath;
         _circleDataMap = new Dictionary<int, CircleData>();
         LoadLogData();
+    }
+
+    public Logger()
+    {
+        _circleDataMap = new Dictionary<int, CircleData>();
+    }
+    
+    public string LogFilePath
+    {
+        get => _logFilePath;
+        set => _logFilePath = value ?? throw new ArgumentNullException(nameof(value));
+    }
+    
+    public Dictionary<int, CircleData> CircleDataMap
+    {
+        get => _circleDataMap;
+        set => _circleDataMap = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     public void LogDiagnosticData(Circle circle)

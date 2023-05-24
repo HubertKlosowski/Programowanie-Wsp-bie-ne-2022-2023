@@ -91,4 +91,9 @@ public class LogicApiImplementation : LogicApi
     {
         Cancellation = new CancellationTokenSource();
     }
+    
+    public override void SetLoggerPath(string path)
+    {
+        _dataApi.Logger.LogFilePath = path;
+    }
 }

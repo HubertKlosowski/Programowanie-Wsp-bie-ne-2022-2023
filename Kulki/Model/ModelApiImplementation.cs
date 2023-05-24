@@ -69,4 +69,9 @@ public class ModelApiImplementation : ModelApi
         _logicApi.Cancellation = new();
         _logicApi.Start();
     }
+    
+    public override void SetLoggerPath(string path)
+    {
+        _logicApi.SetLoggerPath(path);
+    }
 }

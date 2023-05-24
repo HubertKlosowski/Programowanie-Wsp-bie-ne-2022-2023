@@ -26,6 +26,7 @@ public class DataTest
     public void TestCanvasData()
     {
         DataApi data = DataApi.Create();
+        data.SetLoggerPath("TestCanvasData.xml");
         Assert.Equal(700, data.GetCanvasWidth());
         Assert.Equal(450, data.GetCanvasHeight());
     }
@@ -34,6 +35,7 @@ public class DataTest
     public void TestCanvasAddCircles()
     {
         DataApi data = DataApi.Create();
+        data.SetLoggerPath("TestCanvasAddCircles.xml");
         data.Canvas.AddCirclesToCanvas(3);
         Assert.Equal(3, data.Canvas.AllCircles.Count);
         data.Canvas.AllCircles.Clear();
